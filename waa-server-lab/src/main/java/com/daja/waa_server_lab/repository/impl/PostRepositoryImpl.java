@@ -22,20 +22,57 @@ public class PostRepositoryImpl implements IPostRepository {
     }
 
     @Override
+    public List<Post> findByTitle(String title) {
+        return postList.stream()
+                .filter(post -> post.getTitle().contains(title) || post.getTitle().equalsIgnoreCase(title))
+                .toList();
+    }
+
+    @Override
+    public List<Post> findByAuthor(String author) {
+        return postList.stream()
+                .filter(post -> post.getAuthor().contains(author) || post.getAuthor().equalsIgnoreCase(author))
+                .toList();
+    }
+
+    @Override
+    public List<Post> findByContent(String content) {
+        return postList.stream()
+                .filter(post -> post.getContent().contains(content) || post.getContent().equalsIgnoreCase(content))
+                .toList();
+    }
+
+    @Override
     public Optional<Post> findById(Long id) {
         return postList.stream().filter(i -> Objects.equals(i.getId(), id)).findFirst();
     }
 
     @Override
     public Post add(Post createPostDto) {
-        Post newPost = new Post();
-        newPost.setId((long) count.incrementAndGet());
-        newPost.setTitle(createPostDto.getTitle());
-        newPost.setAuthor(createPostDto.getAuthor());
-        newPost.setContent(createPostDto.getContent());
-
-        postList.add(newPost);
-
-        return newPost;
+        createPostDto.setId((long) count.incrementAndGet());
+        postList.add(createPostDto);
+        return createPostDto;
     }
+
+    @Override
+    public Optional<Post> delete(Long id) {
+        Optional<Post> foundPost = findById(id);
+        foundPost.ifPresent(postList::remove);
+        return foundPost;
+    }
+
+    @Override
+    public Optional<Post> update(Long id, Post updatedPost) {
+        Optional<Post> foundPost = findById(id);
+
+        foundPost.ifPresent(existingPost -> {
+            existingPost.setTitle(updatedPost.getTitle());
+            existingPost.setAuthor(updatedPost.getAuthor());
+            existingPost.setContent(updatedPost.getContent());
+        });
+
+        return foundPost;
+    }
+
+
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreatePostDto {
+public class PostDto {
     private String title;
     private String content;
     private String author;

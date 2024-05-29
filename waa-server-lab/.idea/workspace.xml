@@ -5,15 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecd4e248-9425-4fb6-b5aa-57cb320eff50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/configuration/MapperConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto$PostDtoBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/CreatePostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/PostDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/impl/PostRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/impl/PostRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/spec/IPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/spec/IPostRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/CreatePostDto$CreatePostDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/CreatePostDto.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/impl/PostRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/impl/PostRepositoryImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/spec/IPostRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/spec/IPostRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/spec/IPostRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +62,7 @@
     &quot;git-widget-placeholder&quot;: &quot;feat/lab-1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/daja/dev/backend/courses/waa/waa-server-lab&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
