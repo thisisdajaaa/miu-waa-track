@@ -54,12 +54,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 25a88d2 (wip:on-going)
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.WaaServerLabApplication.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+<<<<<<< HEAD
     &quot;git-widget-placeholder&quot;: &quot;feat/lab-1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/daja/dev/backend/courses/waa/waa-server-lab&quot;,
@@ -76,8 +80,14 @@
     "last_opened_file_path": "/Users/daja/dev/backend/courses/waa/waa-server-lab",
     "settings.editor.selected.configurable": "project.propCompiler"
 >>>>>>> ab2660b (feat: on-going)
+=======
+    &quot;git-widget-placeholder&quot;: &quot;feat/orm&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daja/dev/backend/courses/waa/waa-server-lab&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
+>>>>>>> 25a88d2 (wip:on-going)
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
