@@ -1,7 +1,6 @@
 package com.daja.waa_server_lab.repository.impl;
 
-import com.daja.waa_server_lab.entity.dto.request.CreatePostDto;
-import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
+import com.daja.waa_server_lab.entity.Post;
 import com.daja.waa_server_lab.repository.spec.IPostRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,27 +14,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PostRepositoryImpl implements IPostRepository {
     private static final AtomicInteger count = new AtomicInteger(0);
 
-    List<PostDetailDto> postDetailDtos = new ArrayList<>();
+    List<Post> postList = new ArrayList<>();
 
     @Override
-    public List<PostDetailDto> findAll() {
-        return postDetailDtos;
+    public List<Post> findAll() {
+        return postList;
     }
 
     @Override
-    public Optional<PostDetailDto> findById(Long id) {
-        return postDetailDtos.stream().filter(i -> Objects.equals(i.getId(), id)).findFirst();
+    public Optional<Post> findById(Long id) {
+        return postList.stream().filter(i -> Objects.equals(i.getId(), id)).findFirst();
     }
 
     @Override
-    public PostDetailDto add(CreatePostDto createPostDto) {
-        PostDetailDto newPost = new PostDetailDto();
+    public Post add(Post createPostDto) {
+        Post newPost = new Post();
         newPost.setId((long) count.incrementAndGet());
         newPost.setTitle(createPostDto.getTitle());
         newPost.setAuthor(createPostDto.getAuthor());
         newPost.setContent(createPostDto.getContent());
 
-        postDetailDtos.add(newPost);
+        postList.add(newPost);
 
         return newPost;
     }

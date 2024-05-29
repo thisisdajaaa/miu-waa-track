@@ -1,15 +1,14 @@
 package com.daja.waa_server_lab.repository.spec;
 
-import com.daja.waa_server_lab.entity.dto.request.CreatePostDto;
-import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
+import com.daja.waa_server_lab.entity.Post;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IPostRepository {
-    List<PostDetailDto> findAll();
+    List<Post> findAll();
 
-    Optional<PostDetailDto> findById(Long id);
+    Optional<Post> findById(Long id);
 
-    PostDetailDto add(CreatePostDto createPostDto);
+    Post add(Post createPostDto);
 }
