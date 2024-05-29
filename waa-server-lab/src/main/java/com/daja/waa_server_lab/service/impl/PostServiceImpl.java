@@ -2,11 +2,16 @@ package com.daja.waa_server_lab.service.impl;
 
 import com.daja.waa_server_lab.configuration.MapperConfiguration;
 import com.daja.waa_server_lab.entity.Post;
+import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.PostDto;
 import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
+import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.exception.PostException;
-import com.daja.waa_server_lab.repository.spec.IPostRepository;
+import com.daja.waa_server_lab.exception.UserException;
+import com.daja.waa_server_lab.repository.IPostRepository;
+import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IPostService;
+import com.daja.waa_server_lab.service.spec.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +21,13 @@ import java.util.Map;
 @Service
 public class PostServiceImpl implements IPostService {
     private final IPostRepository postRepository;
+    private final IUserRepository userRepository;
     private final MapperConfiguration mapperConfiguration;
 
     @Autowired
-    public PostServiceImpl(IPostRepository postRepository, MapperConfiguration mapperConfiguration) {
+    public PostServiceImpl(IPostRepository postRepository, IUserRepository userRepository, MapperConfiguration mapperConfiguration) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
         this.mapperConfiguration = mapperConfiguration;
     }
 
@@ -34,10 +41,10 @@ public class PostServiceImpl implements IPostService {
                 posts = postRepository.findByTitle(title);
             }
 
-            if (filters.containsKey("author")) {
-                String author = filters.get("author");
-                posts = postRepository.findByAuthor(author);
-            }
+//            if (filters.containsKey("author")) {
+//                String author = filters.get("author");
+//                posts = postRepository.findByAuthor(author);
+//            }
 
             if (filters.containsKey("content")) {
                 String content = filters.get("content");
@@ -58,26 +65,46 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public PostDetailDto add(PostDto postDto) {
-        Post addedPost = postRepository.add(mapperConfiguration.convert(postDto, Post.class));
-        return mapperConfiguration.convert(addedPost, PostDetailDto.class);
+        User foundUser = userRepository.findById(postDto.getUserId())
+                .orElseThrow(UserException.NotFoundException::new);
+
+        Post post = Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .user(foundUser)
+                .build();
+
+        Post savedPost = postRepository.save(post);
+
+        PostDetailDto savedPostDto = mapperConfiguration.convert(savedPost, PostDetailDto.class);
+        savedPostDto.setUserId(foundUser.getId());
+
+        return savedPostDto;
     }
 
     @Override
     public PostDetailDto delete(Long id) {
         PostDetailDto foundPost = findById(id);
-        return mapperConfiguration.convert(postRepository.delete(foundPost.getId()), PostDetailDto.class);
+
+        postRepository.deleteById(id);
+
+        return mapperConfiguration.convert(foundPost, PostDetailDto.class);
     }
 
     @Override
     public PostDetailDto update(Long id, PostDto updatedDto) {
-        PostDetailDto foundPost = findById(id);
-        Post updatedPost = mapperConfiguration.convert(foundPost, Post.class);
+        Post existingPost = postRepository.findById(id).orElseThrow(PostException.NotFoundException::new);
 
-        if (updatedDto.getTitle() != null) updatedPost.setTitle(updatedDto.getTitle());
-        if (updatedDto.getAuthor() != null) updatedPost.setAuthor(updatedDto.getAuthor());
-        if (updatedDto.getContent() != null) updatedPost.setContent(updatedDto.getContent());
+        if (updatedDto.getTitle() != null) existingPost.setTitle(updatedDto.getTitle());
+        if (updatedDto.getContent() != null) existingPost.setContent(updatedDto.getContent());
+        if (updatedDto.getUserId() != null) {
+            User newUser = userRepository.findById(updatedDto.getUserId())
+                    .orElseThrow(UserException.NotFoundException::new);
 
-        Post savedPost = postRepository.update(updatedPost.getId(), updatedPost).orElseThrow(PostException.NotFoundException::new);
+            existingPost.setUser(newUser);
+        }
+
+        Post savedPost = postRepository.save(existingPost);
 
         return mapperConfiguration.convert(savedPost, PostDetailDto.class);
     }

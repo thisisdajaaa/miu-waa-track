@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDetailDto {
+public class UserDetailDto {
     private Long id;
-    private String title;
-    private String content;
-    private Long userId;
+    private String name;
 }
