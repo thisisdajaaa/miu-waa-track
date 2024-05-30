@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -58,7 +57,7 @@ public class PostController {
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> deletePost(
             @PathVariable Long id) {
         return new ResponseEntity<>(
-                new ResponseHelper.CustomResponse<>(true, "Successfully deleted post!", postService.delete(id)),
+                new ResponseHelper.CustomResponse<>(true, "Successfully deleted a post!", postService.delete(id)),
                 HttpStatus.NO_CONTENT);
     }
 
@@ -66,7 +65,7 @@ public class PostController {
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> updatePost(
             @PathVariable Long id, @RequestBody PostDto postDto) {
         return new ResponseEntity<>(
-                new ResponseHelper.CustomResponse<>(true, "Successfully updated post!", postService.update(id, postDto)),
+                new ResponseHelper.CustomResponse<>(true, "Successfully updated a post!", postService.update(id, postDto)),
                 HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package com.daja.waa_server_lab.entity.dto.request;
+package com.daja.waa_server_lab.entity.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDto {
-    private String title;
-    private String content;
-    private Long userId;
+public class UserPostCountDto {
+    private Long id;
+    private String name;
+    private Long count;
 }

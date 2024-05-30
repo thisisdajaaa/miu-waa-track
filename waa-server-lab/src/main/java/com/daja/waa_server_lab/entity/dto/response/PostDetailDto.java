@@ -13,5 +13,4 @@ public class PostDetailDto {
     private Long id;
     private String title;
     private String content;
-    private String author;
 }
