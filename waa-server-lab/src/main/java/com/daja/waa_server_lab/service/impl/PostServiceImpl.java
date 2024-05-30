@@ -5,13 +5,11 @@ import com.daja.waa_server_lab.entity.Post;
 import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.PostDto;
 import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
-import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.exception.PostException;
 import com.daja.waa_server_lab.exception.UserException;
 import com.daja.waa_server_lab.repository.IPostRepository;
 import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IPostService;
-import com.daja.waa_server_lab.service.spec.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +39,6 @@ public class PostServiceImpl implements IPostService {
                 posts = postRepository.findByTitle(title);
             }
 
-//            if (filters.containsKey("author")) {
-//                String author = filters.get("author");
-//                posts = postRepository.findByAuthor(author);
-//            }
-
             if (filters.containsKey("content")) {
                 String content = filters.get("content");
                 posts = postRepository.findByContent(content);
@@ -71,15 +64,15 @@ public class PostServiceImpl implements IPostService {
         Post post = Post.builder()
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
-                .user(foundUser)
                 .build();
+
+        foundUser.getPosts().add(post);
 
         Post savedPost = postRepository.save(post);
 
-        PostDetailDto savedPostDto = mapperConfiguration.convert(savedPost, PostDetailDto.class);
-        savedPostDto.setUserId(foundUser.getId());
+        userRepository.save(foundUser);
 
-        return savedPostDto;
+        return mapperConfiguration.convert(savedPost, PostDetailDto.class);
     }
 
     @Override
@@ -97,12 +90,6 @@ public class PostServiceImpl implements IPostService {
 
         if (updatedDto.getTitle() != null) existingPost.setTitle(updatedDto.getTitle());
         if (updatedDto.getContent() != null) existingPost.setContent(updatedDto.getContent());
-        if (updatedDto.getUserId() != null) {
-            User newUser = userRepository.findById(updatedDto.getUserId())
-                    .orElseThrow(UserException.NotFoundException::new);
-
-            existingPost.setUser(newUser);
-        }
 
         Post savedPost = postRepository.save(existingPost);
 

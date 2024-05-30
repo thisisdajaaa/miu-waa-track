@@ -1,7 +1,9 @@
 package com.daja.waa_server_lab.controller;
 
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
+import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
+import com.daja.waa_server_lab.entity.dto.response.UserPostCountDto;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +69,17 @@ public class UserController {
         return new ResponseEntity<>(
                 new ResponseHelper.CustomResponse<>(true, "Successfully updated a user!", userService.update(id, userDto)),
                 HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<ResponseHelper.CustomResponse<List<PostDetailDto>>> getPostsByUser(@PathVariable Long id) {
+        return new ResponseEntity<>(
+                new ResponseHelper.CustomResponse<>(true, "Successfully retrieved posts!", userService.findPostsByUser(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("/multiple-posts")
+    public ResponseEntity<ResponseHelper.CustomResponse<List<UserPostCountDto>>> getUsersWithPosts() {
+        return new ResponseEntity<>(
+                new ResponseHelper.CustomResponse<>(true, "Successfully retrieved users with more than 1 post!", userService.findUsersWithPosts()), HttpStatus.OK);
     }
 }

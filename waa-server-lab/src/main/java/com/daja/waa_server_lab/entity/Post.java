@@ -18,10 +18,6 @@ public class Post {
     @Column(name = "title", nullable = false, unique = true, length = 120)
     private String title;
 
-    @Column(name = "content", nullable = false, unique = true)
+    @Column(name = "content", nullable = false)
     private String content;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }

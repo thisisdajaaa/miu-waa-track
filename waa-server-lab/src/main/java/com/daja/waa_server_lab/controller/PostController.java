@@ -56,7 +56,6 @@ public class PostController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> deletePost(
             @PathVariable Long id) {
-        System.out.println("id::: " + id);
         return new ResponseEntity<>(
                 new ResponseHelper.CustomResponse<>(true, "Successfully deleted a post!", postService.delete(id)),
                 HttpStatus.NO_CONTENT);
