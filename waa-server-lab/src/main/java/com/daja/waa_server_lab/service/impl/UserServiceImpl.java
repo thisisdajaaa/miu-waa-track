@@ -3,7 +3,6 @@ package com.daja.waa_server_lab.service.impl;
 import com.daja.waa_server_lab.configuration.MapperConfiguration;
 import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
-import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.entity.dto.response.UserPostCountDto;
 import com.daja.waa_server_lab.exception.UserException;
@@ -65,17 +64,12 @@ public class UserServiceImpl implements IUserService {
         UserDetailDto foundUser = findById(id);
         User updatedUser = mapperConfiguration.convert(foundUser, User.class);
 
-        if (updatedDto.getName() != null) updatedUser.setName(updatedDto.getName());
+        if (updatedDto.getName() != null)
+            updatedUser.setName(updatedDto.getName());
 
         User savedUser = userRepository.save(updatedUser);
 
         return mapperConfiguration.convert(savedUser, UserDetailDto.class);
-    }
-
-    @Override
-    public List<PostDetailDto> findPostsByUser(Long id) {
-        User foundUser = userRepository.findById(id).orElseThrow(UserException.NotFoundException::new);
-        return foundUser.getPosts().stream().map(i -> mapperConfiguration.convert(i, PostDetailDto.class)).toList();
     }
 
     @Override

@@ -11,9 +11,11 @@ public interface IPostService {
 
     PostDetailDto findById(Long id);
 
-    PostDetailDto add(PostDto postDto);
+    PostDetailDto add(Long userId, PostDto postDto);
 
     PostDetailDto delete(Long id);
 
     PostDetailDto update(Long id, PostDto updatedDto);
+
+    PostDetailDto findByUserIdAndPostId(Long userId, Long postId);
 }

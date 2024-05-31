@@ -14,7 +14,8 @@ import java.util.Map;
 public class ResponseException extends ResponseEntityExceptionHandler {
     @ExceptionHandler({
             PostException.NotFoundException.class,
-            UserException.NotFoundException.class
+            UserException.NotFoundException.class,
+            CommentException.NotFoundException.class
     })
     public final ResponseEntity<ResponseHelper.CustomResponse<Object>> handleNotFoundException(RuntimeException exception) {
         Map<String, String> errors = new HashMap<>();

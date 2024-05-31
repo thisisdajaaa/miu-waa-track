@@ -5,28 +5,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecd4e248-9425-4fb6-b5aa-57cb320eff50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/UserPostCountDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/CommentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/CommentDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/CommentDetailDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/exception/CommentException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/helper/QueryParamHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/ICommentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/CommentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/ICommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/IUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/PostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/PostDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/exception/ResponseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/exception/ResponseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/IPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/repository/IPostRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/WaaServerLabApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/WaaServerLabApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/configuration/MapperConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/configuration/MapperConfiguration.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post$PostBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post$PostBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User$UserBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto$PostDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto$PostDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/PostDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/UserDto$UserDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/UserDto$UserDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/UserDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/request/UserDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto$PostDetailDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto$PostDetailDtoBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserDetailDto$UserDetailDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserDetailDto$UserDetailDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserDetailDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserDetailDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserPostCountDto$UserPostCountDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserPostCountDto$UserPostCountDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserPostCountDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/UserPostCountDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/PostException$NotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/PostException$NotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/PostException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/PostException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/ResponseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/ResponseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/UserException$NotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/UserException$NotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/UserException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/exception/UserException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/helper/ResponseHelper$CustomResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/helper/ResponseHelper$CustomResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/helper/ResponseHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/helper/ResponseHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/IPostRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/IPostRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/IUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/repository/IUserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/daja/waa_server_lab/WaaServerLabApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/daja/waa_server_lab/WaaServerLabApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,11 +78,35 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "thisisdajaaa"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/thisisdajaaa/miu-waa-track.git",
+    "accountId": "3aa4d4da-3c75-415d-b190-e6197f540185"
+  }
+}]]></component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="LLMProjectSettings">
+    <option name="aiignore_manually_set" value="true" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 1
@@ -61,13 +119,31 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.WaaServerLabApplication.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/orm",
+    "Spring Boot.WaaServerLabApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/daja/dev/backend/courses/waa/waa-server-lab",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -75,10 +151,21 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="WaaServerLabApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="waa-server-lab" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.daja.waa_server_lab.WaaServerLabApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
       </set>
     </attachedChunks>
   </component>
@@ -90,7 +177,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716921802747</updated>
+      <workItem from="1717095247986" duration="812000" />
+      <workItem from="1717096249970" duration="619000" />
+      <workItem from="1717097256978" duration="120000" />
+      <workItem from="1717097391177" duration="105000" />
+      <workItem from="1717097506650" duration="142000" />
+      <workItem from="1717097658007" duration="6259000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

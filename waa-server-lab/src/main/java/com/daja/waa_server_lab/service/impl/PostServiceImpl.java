@@ -23,7 +23,8 @@ public class PostServiceImpl implements IPostService {
     private final MapperConfiguration mapperConfiguration;
 
     @Autowired
-    public PostServiceImpl(IPostRepository postRepository, IUserRepository userRepository, MapperConfiguration mapperConfiguration) {
+    public PostServiceImpl(IPostRepository postRepository, IUserRepository userRepository,
+                           MapperConfiguration mapperConfiguration) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.mapperConfiguration = mapperConfiguration;
@@ -57,8 +58,8 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public PostDetailDto add(PostDto postDto) {
-        User foundUser = userRepository.findById(postDto.getUserId())
+    public PostDetailDto add(Long userId, PostDto postDto) {
+        User foundUser = userRepository.findById(userId)
                 .orElseThrow(UserException.NotFoundException::new);
 
         Post post = Post.builder()
@@ -88,11 +89,20 @@ public class PostServiceImpl implements IPostService {
     public PostDetailDto update(Long id, PostDto updatedDto) {
         Post existingPost = postRepository.findById(id).orElseThrow(PostException.NotFoundException::new);
 
-        if (updatedDto.getTitle() != null) existingPost.setTitle(updatedDto.getTitle());
-        if (updatedDto.getContent() != null) existingPost.setContent(updatedDto.getContent());
+        if (updatedDto.getTitle() != null)
+            existingPost.setTitle(updatedDto.getTitle());
+        if (updatedDto.getContent() != null)
+            existingPost.setContent(updatedDto.getContent());
 
         Post savedPost = postRepository.save(existingPost);
 
         return mapperConfiguration.convert(savedPost, PostDetailDto.class);
+    }
+
+    @Override
+    public PostDetailDto findByUserIdAndPostId(Long userId, Long postId) {
+        Post existingPost = postRepository.findByUserIdAndPostId(userId, postId).orElseThrow(PostException.NotFoundException::new);
+
+        return mapperConfiguration.convert(existingPost, PostDetailDto.class);
     }
 }
