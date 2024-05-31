@@ -62,6 +62,21 @@ public class CommentController {
                 HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<ResponseHelper.CustomResponse<CommentDetailDto>> createComment(
+            @PathVariable Long userId,
+            @PathVariable Long postId,
+            @RequestBody CommentDto commentDto) {
+
+        userService.findById(userId);
+        postService.findByUserIdAndPostId(userId, postId);
+
+        return new ResponseEntity<>(
+                new ResponseHelper.CustomResponse<>(true, "Successfully created a comment!", commentService.add(postId,
+                        commentDto)),
+                HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/{commentId}")
     public ResponseEntity<ResponseHelper.CustomResponse<CommentDetailDto>> deleteComment(
             @PathVariable Long userId,

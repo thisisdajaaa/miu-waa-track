@@ -2,7 +2,6 @@ package com.daja.waa_server_lab.controller;
 
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
-import com.daja.waa_server_lab.entity.dto.response.UserPostCountDto;
 import com.daja.waa_server_lab.helper.QueryParamHelper;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.IUserService;
@@ -26,15 +25,18 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<ResponseHelper.CustomResponse<List<UserDetailDto>>> getUsers(
-            @RequestParam(required = false) String filter) {
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) Integer postCount,
+            @RequestParam(required = false) String postTitle) {
 
         Map<String, String> transformedFilter = QueryParamHelper.transformedFilter(filter);
 
         return new ResponseEntity<>(
                 new ResponseHelper.CustomResponse<>(true, "Successfully retrieved users!",
-                        userService.findAll(transformedFilter)),
+                        userService.findAll(transformedFilter, postCount, postTitle)),
                 HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseHelper.CustomResponse<UserDetailDto>> getUser(@PathVariable Long id) {
@@ -64,14 +66,6 @@ public class UserController {
         return new ResponseEntity<>(
                 new ResponseHelper.CustomResponse<>(true, "Successfully updated a user!",
                         userService.update(id, userDto)),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/multiple-posts")
-    public ResponseEntity<ResponseHelper.CustomResponse<List<UserPostCountDto>>> getUsersWithPosts() {
-        return new ResponseEntity<>(
-                new ResponseHelper.CustomResponse<>(true, "Successfully retrieved users with more than 1 post!",
-                        userService.findUsersWithPosts()),
                 HttpStatus.OK);
     }
 }

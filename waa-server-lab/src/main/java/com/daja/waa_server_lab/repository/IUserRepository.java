@@ -11,12 +11,12 @@ import java.util.List;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.name LIKE %:name%")
-    List<User> findByName(@Param("name") String name);
-
     @Query("SELECT u.id AS id, u.name AS name, COUNT(p) AS count " +
             "FROM User u JOIN u.posts p " +
             "GROUP BY u.id, u.name " +
-            "HAVING COUNT(p) > 1")
-    List<Tuple> findUsersWithPosts();
+            "HAVING COUNT(p) = :count")
+    List<Tuple> findUsersWithPostsByCount(@Param("count") Integer count);
+
+    @Query("SELECT DISTINCT u FROM User u JOIN u.posts p WHERE p.title LIKE %:title%")
+    List<User> findUsersByPostTitle(@Param("title") String title);
 }
