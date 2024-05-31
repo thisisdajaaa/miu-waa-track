@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class PostDto {
     private String title;
     private String content;
-    private Long userId;
 }

@@ -20,7 +20,7 @@ public class User {
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private List<Post> posts;
 }
