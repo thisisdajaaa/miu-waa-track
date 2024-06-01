@@ -2,6 +2,8 @@ package com.daja.waa_server_lab.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -20,7 +22,8 @@ public class User {
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @Fetch(FetchMode.SELECT)
     private List<Post> posts;
 }

@@ -1,5 +1,6 @@
 package com.daja.waa_server_lab.controller;
 
+import com.daja.waa_server_lab.aspect.annotation.ExecutionTime;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.helper.QueryParamHelper;
@@ -37,7 +38,7 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-
+    @ExecutionTime
     @GetMapping("/{id}")
     public ResponseEntity<ResponseHelper.CustomResponse<UserDetailDto>> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(

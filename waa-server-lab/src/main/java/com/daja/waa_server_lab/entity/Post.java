@@ -2,6 +2,8 @@ package com.daja.waa_server_lab.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
     private List<Comment> comments;
 }

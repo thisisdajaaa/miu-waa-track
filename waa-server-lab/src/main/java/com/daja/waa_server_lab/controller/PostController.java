@@ -30,8 +30,6 @@ public class PostController {
     public ResponseEntity<ResponseHelper.CustomResponse<List<PostDetailDto>>> getPosts(
             @PathVariable Long userId,
             @RequestParam(required = false) String filter) {
-
-        // Ensure the user exists
         userService.findById(userId);
 
         Map<String, String> transformedFilter = QueryParamHelper.transformedFilter(filter);
@@ -47,11 +45,7 @@ public class PostController {
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> getPost(
             @PathVariable Long userId,
             @PathVariable Long postId) {
-
-        // Ensure the user exists
         userService.findById(userId);
-
-        // Ensure the post exists and belongs to the user
         postService.findByUserIdAndPostId(userId, postId);
 
         return new ResponseEntity<>(
@@ -62,8 +56,6 @@ public class PostController {
     @PostMapping
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> createPost(
             @PathVariable Long userId, @RequestBody PostDto postDto) {
-
-        // Ensure the user exists
         userService.findById(userId);
 
         return new ResponseEntity<>(
@@ -74,11 +66,7 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> deletePost(
             @PathVariable Long userId, @PathVariable Long postId) {
-
-        // Ensure the user exists
         userService.findById(userId);
-
-        // Ensure the post exists and belongs to the user
         postService.findByUserIdAndPostId(userId, postId);
 
         return new ResponseEntity<>(
@@ -89,11 +77,7 @@ public class PostController {
     @PatchMapping("/{postId}")
     public ResponseEntity<ResponseHelper.CustomResponse<PostDetailDto>> updatePost(
             @PathVariable Long userId, @PathVariable Long postId, @RequestBody PostDto postDto) {
-
-        // Ensure the user exists
         userService.findById(userId);
-
-        // Ensure the post exists and belongs to the user
         postService.findByUserIdAndPostId(userId, postId);
 
         return new ResponseEntity<>(
