@@ -62,12 +62,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserDetailDto findById(Long id) {
         User foundUser = userRepository.findById(id).orElseThrow(UserException.NotFoundException::new);
+        System.out.println(foundUser.getPosts());
         return mapperConfiguration.convert(foundUser, UserDetailDto.class);
     }
 
     @Override
     public UserDetailDto add(UserDto userDto) {
         User addedUser = userRepository.save(mapperConfiguration.convert(userDto, User.class));
+
         return mapperConfiguration.convert(addedUser, UserDetailDto.class);
     }
 

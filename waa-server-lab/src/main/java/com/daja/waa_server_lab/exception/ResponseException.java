@@ -26,5 +26,4 @@ public class ResponseException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-
 }

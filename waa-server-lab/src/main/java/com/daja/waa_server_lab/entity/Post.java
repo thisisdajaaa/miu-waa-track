@@ -2,6 +2,9 @@ package com.daja.waa_server_lab.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -11,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString(exclude = {"comments"})
 @Builder
 public class Post {
     @Id
@@ -23,6 +27,8 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 5)
     private List<Comment> comments;
 }

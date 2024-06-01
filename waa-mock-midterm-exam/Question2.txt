@@ -1,0 +1,12 @@
+1. Auto wiring means that the instance or method would be wired from the 
+object instance that was stored in the DI container on compile time. 
+The wiring would be performed on run time. Auto wirings different modes are
+field injection, setter injection and constructor injection.
+
+2. 
+- Uniform interface means that there should be a way to differentiate
+Rest from Non-Rest endpoints. By following a certain convention in defining
+a resource, it should be a noun and not a verb. Utilizing URI's in rest systems
+and implementing http endpoints in a CRUD manner.
+
+- Stateless means that each server request would not be storing client contexts
