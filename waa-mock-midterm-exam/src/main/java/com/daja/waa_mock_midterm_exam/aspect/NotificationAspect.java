@@ -27,7 +27,7 @@ public class NotificationAspect {
                     System.out.println("Result is a list of size: " + resultList.size());
 
                     if (!resultList.isEmpty()) {
-                        System.out.println("First element class: " + resultList.get(0).getClass());
+                        System.out.println("First element class: " + resultList.getFirst().getClass());
 
                         if (resultList.getFirst() instanceof StudentDetailDto) {
                             System.out.println("Alert: A method returning a list of students was called.");
