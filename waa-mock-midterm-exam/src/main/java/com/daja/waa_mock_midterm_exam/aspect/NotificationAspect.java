@@ -16,8 +16,6 @@ public class NotificationAspect {
 
     @AfterReturning(pointcut = "execution(* com.daja.waa_mock_midterm_exam.controller.StudentController.*(..))", returning = "result")
     public void sendAlert(JoinPoint joinPoint, Object result) {
-        System.out.println("GG");
-
         if (result instanceof ResponseEntity<?> responseEntity) {
             Object body = responseEntity.getBody();
 
