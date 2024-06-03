@@ -1,6 +1,5 @@
 package com.daja.waa_mock_midterm_exam.service.impl;
 
-import com.daja.waa_mock_midterm_exam.configuration.MapperConfiguration;
 import com.daja.waa_mock_midterm_exam.entity.Course;
 import com.daja.waa_mock_midterm_exam.entity.CourseDetail;
 import com.daja.waa_mock_midterm_exam.entity.dto.request.CourseDto;
@@ -17,12 +16,10 @@ import java.util.Map;
 @Service
 public class CourseServiceImpl implements ICourseService {
     private final ICourseRepository courseRepository;
-    private final MapperConfiguration mapperConfiguration;
 
     @Autowired
-    public CourseServiceImpl(ICourseRepository courseRepository, MapperConfiguration mapperConfiguration) {
+    public CourseServiceImpl(ICourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.mapperConfiguration = mapperConfiguration;
     }
 
     @Override
