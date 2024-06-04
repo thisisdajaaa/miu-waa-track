@@ -10,7 +10,6 @@ import com.daja.waa_server_lab.exception.UserException;
 import com.daja.waa_server_lab.repository.IPostRepository;
 import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +18,11 @@ import java.util.Map;
 @Service
 public class PostServiceImpl implements IPostService {
     private final IPostRepository postRepository;
+
     private final IUserRepository userRepository;
+
     private final MapperConfiguration mapperConfiguration;
 
-    @Autowired
     public PostServiceImpl(IPostRepository postRepository, IUserRepository userRepository,
                            MapperConfiguration mapperConfiguration) {
         this.postRepository = postRepository;

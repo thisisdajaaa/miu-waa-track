@@ -10,6 +10,7 @@ import java.time.Duration;
 @Service
 public class RedisServiceImpl implements IRedisService {
     private final RedisTemplate<String, Object> redisTemplate;
+
     private final ValueOperations<String, Object> valueOperations;
 
     public RedisServiceImpl(RedisTemplate<String, Object> redisTemplate) {

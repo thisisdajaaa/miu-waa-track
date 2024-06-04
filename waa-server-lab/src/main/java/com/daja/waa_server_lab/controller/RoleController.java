@@ -6,7 +6,6 @@ import com.daja.waa_server_lab.entity.dto.response.RoleDetailDto;
 import com.daja.waa_server_lab.helper.QueryParamHelper;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.IRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import java.util.Map;
 public class RoleController {
     private final IRoleService roleService;
 
-    @Autowired
     public RoleController(IRoleService roleService) {
         this.roleService = roleService;
     }

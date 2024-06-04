@@ -8,7 +8,6 @@ import com.daja.waa_server_lab.exception.UserException;
 import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IUserService;
 import jakarta.persistence.Tuple;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

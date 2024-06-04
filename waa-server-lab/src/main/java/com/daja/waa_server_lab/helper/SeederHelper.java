@@ -12,8 +12,8 @@ import java.util.List;
 
 @Component
 public class SeederHelper implements CommandLineRunner {
-
     private final IRoleService roleService;
+
     private final IUserService userService;
 
     public SeederHelper(IRoleService roleService, IUserService userService) {
