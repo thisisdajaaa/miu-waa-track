@@ -1,6 +1,7 @@
 package com.daja.waa_server_lab.service.impl;
 
 import com.daja.waa_server_lab.service.spec.IJWTService;
+import com.daja.waa_server_lab.service.spec.IRedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,9 +9,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +31,12 @@ public class JWTServiceImpl implements IJWTService {
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
 
+    private final IRedisService redisService;
+
+    public JWTServiceImpl(IRedisService redisService) {
+        this.redisService = redisService;
+    }
+
     @Override
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -43,24 +52,30 @@ public class JWTServiceImpl implements IJWTService {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", userDetails.getAuthorities());
-        return generateToken(claims, userDetails);
+        String token = generateToken(claims, userDetails);
+        storeToken(token, Duration.ofMillis(jwtExpiration));
+        return token;
     }
 
     @Override
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails, jwtExpiration);
+        String token = buildToken(extraClaims, userDetails, jwtExpiration);
+        storeToken(token, Duration.ofMillis(jwtExpiration));
+        return token;
     }
 
     @Override
     public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+        String refreshToken = buildToken(new HashMap<>(), userDetails, refreshExpiration);
+        storeToken(refreshToken, Duration.ofMillis(refreshExpiration));
+        return refreshToken;
     }
 
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
-        return Jwts
-                .builder()
+        return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
+                .setId(UUID.randomUUID().toString())  // Add jti claim
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -70,12 +85,20 @@ public class JWTServiceImpl implements IJWTService {
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return username.equals(userDetails.getUsername()) && isTokenNotExpiredAndRevoked(token);
     }
 
     @Override
-    public boolean isTokenExpired(String token) {
+    public boolean isTokenNotExpiredAndRevoked(String token) {
+        return !isTokenExpired(token) && !isTokenRevoked(token);
+    }
+
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }
+
+    private boolean isTokenRevoked(String token) {
+        return "revoked".equals(redisService.get(token));
     }
 
     private Date extractExpiration(String token) {
@@ -83,16 +106,20 @@ public class JWTServiceImpl implements IJWTService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private void storeToken(String token, Duration expiration) {
+        redisService.add(token, "valid", expiration);
+    }
+
+    @Override
+    public void revokeToken(String token) {
+        redisService.add(token, "revoked", Duration.ofMillis(jwtExpiration));
     }
 }

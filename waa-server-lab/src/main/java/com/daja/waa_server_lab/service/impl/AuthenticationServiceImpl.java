@@ -28,15 +28,10 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticationServiceImpl implements IAuthenticationService {
     private final IUserRepository userRepository;
-
     private final IRoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authenticationManager;
-
     private final UserDetailsService userDetailsService;
-
     private final IJWTService jwtService;
 
     public AuthenticationServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
@@ -84,6 +79,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         return new AuthenticationDetailDto(jwtToken, refreshToken, userDetails.getUsername());
     }
 
+    @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader("Authorization");
         final String refreshToken;
@@ -109,6 +105,14 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             return;
         }
 
+        jwtService.revokeToken(refreshToken);
+
+        final String oldAccessToken = request.getHeader("Old-Access-Token");
+
+        if (oldAccessToken != null && oldAccessToken.startsWith("Bearer ")) {
+            jwtService.revokeToken(oldAccessToken.substring(7));
+        }
+
         final String newAccessToken = jwtService.generateToken(userDetails);
         final String newRefreshToken = jwtService.generateRefreshToken(userDetails);
 
@@ -121,7 +125,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
                 .refreshToken(newRefreshToken)
                 .build();
 
+        ResponseHelper.CustomResponse<AuthenticationDetailDto> customResponse = new ResponseHelper.CustomResponse<>(
+                true, "Successfully refreshed tokens!", authResponse);
+
         response.setContentType("application/json");
-        new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+        response.setStatus(HttpServletResponse.SC_OK);
+        new ObjectMapper().writeValue(response.getOutputStream(), customResponse);
     }
 }

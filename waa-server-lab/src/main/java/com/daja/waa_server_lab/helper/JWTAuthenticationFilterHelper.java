@@ -43,7 +43,7 @@ public class JWTAuthenticationFilterHelper extends OncePerRequestFilter {
         final String userEmail;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            ResponseHelper.respondWithUnauthorizedError(response, "JWT token is missing or invalid.");
             return;
         }
 
@@ -59,13 +59,6 @@ public class JWTAuthenticationFilterHelper extends OncePerRequestFilter {
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if (!jwtService.isTokenValid(jwt, userDetails)) {
-                ResponseHelper.respondWithUnauthorizedError(response, "JWT token is not valid.");
-                return;
-            }
-
-            boolean isTokenExpired = jwtService.isTokenExpired(jwt);
-
-            if (isTokenExpired) {
                 ResponseHelper.respondWithUnauthorizedError(response, "JWT token is expired or revoked.");
                 return;
             }
