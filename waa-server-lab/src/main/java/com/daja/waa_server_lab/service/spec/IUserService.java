@@ -16,4 +16,6 @@ public interface IUserService {
     UserDetailDto delete(Long id);
 
     UserDetailDto update(Long id, UserDto updatedDto);
+
+    Integer getUserListCount();
 }

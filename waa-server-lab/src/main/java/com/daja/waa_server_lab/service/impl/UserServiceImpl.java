@@ -9,6 +9,7 @@ import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IUserService;
 import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +18,15 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements IUserService {
     private final IUserRepository userRepository;
+
     private final MapperConfiguration mapperConfiguration;
 
-    @Autowired
-    public UserServiceImpl(IUserRepository userRepository, MapperConfiguration mapperConfiguration) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(IUserRepository userRepository, MapperConfiguration mapperConfiguration, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mapperConfiguration = mapperConfiguration;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -68,6 +72,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDetailDto add(UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
         User addedUser = userRepository.save(mapperConfiguration.convert(userDto, User.class));
 
         return mapperConfiguration.convert(addedUser, UserDetailDto.class);
@@ -88,8 +94,19 @@ public class UserServiceImpl implements IUserService {
         if (updatedDto.getName() != null)
             updatedUser.setName(updatedDto.getName());
 
+        if (updatedDto.getEmail() != null)
+            updatedUser.setEmail(updatedDto.getEmail());
+
+        if (updatedDto.getPassword() != null)
+            updatedUser.setPassword(passwordEncoder.encode(updatedDto.getPassword()));
+
         User savedUser = userRepository.save(updatedUser);
 
         return mapperConfiguration.convert(savedUser, UserDetailDto.class);
+    }
+
+    @Override
+    public Integer getUserListCount() {
+        return userRepository.findAll().size();
     }
 }

@@ -1,7 +1,12 @@
 package com.daja.waa_server_lab.helper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
+import org.springframework.http.MediaType;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 public class ResponseHelper {
@@ -25,5 +30,14 @@ public class ResponseHelper {
             this.data = data;
             this.errors = errors;
         }
+    }
+
+    public static void respondWithUnauthorizedError(HttpServletResponse response, String message) throws IOException {
+        Map<String, String> errors = Collections.singletonMap("IOException", message);
+
+        CustomResponse<Object> responseBody = new CustomResponse<>(false, "An error occurred!", null, errors);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), responseBody);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
@@ -19,4 +20,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.posts p WHERE p.title LIKE %:title%")
     List<User> findUsersByPostTitle(@Param("title") String title);
+
+    Optional<User> findUserByEmail(String email);
 }
