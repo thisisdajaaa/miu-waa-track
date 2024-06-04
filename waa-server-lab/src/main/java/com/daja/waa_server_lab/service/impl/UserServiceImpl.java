@@ -1,10 +1,13 @@
 package com.daja.waa_server_lab.service.impl;
 
 import com.daja.waa_server_lab.configuration.MapperConfiguration;
+import com.daja.waa_server_lab.entity.Role;
 import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
+import com.daja.waa_server_lab.exception.RoleException;
 import com.daja.waa_server_lab.exception.UserException;
+import com.daja.waa_server_lab.repository.IRoleRepository;
 import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IUserService;
 import jakarta.persistence.Tuple;
@@ -13,17 +16,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
     private final IUserRepository userRepository;
 
+    private final IRoleRepository roleRepository;
+
     private final MapperConfiguration mapperConfiguration;
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(IUserRepository userRepository, MapperConfiguration mapperConfiguration, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, MapperConfiguration mapperConfiguration, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.mapperConfiguration = mapperConfiguration;
         this.passwordEncoder = passwordEncoder;
     }
@@ -71,9 +78,16 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDetailDto add(UserDto userDto) {
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        User user = mapperConfiguration.convert(userDto, User.class);
 
-        User addedUser = userRepository.save(mapperConfiguration.convert(userDto, User.class));
+        List<Role> roles = userDto.getRoleIds().stream()
+                .map(roleRepository::findById)
+                .map(optionalRole -> optionalRole.orElseThrow(RoleException.NotFoundException::new))
+                .collect(Collectors.toList());
+
+        user.setRoles(roles);
+
+        User addedUser = userRepository.save(user);
 
         return mapperConfiguration.convert(addedUser, UserDetailDto.class);
     }

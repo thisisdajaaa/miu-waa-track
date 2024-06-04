@@ -5,12 +5,14 @@ import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.LoginDto;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.AuthenticationDetailDto;
+import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.exception.RoleException;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.repository.IRoleRepository;
 import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IAuthenticationService;
 import com.daja.waa_server_lab.service.spec.IJWTService;
+import com.daja.waa_server_lab.service.spec.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,14 +32,16 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final IJWTService jwtService;
 
-    public AuthenticationServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
+    public AuthenticationServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder passwordEncoder, IUserService userService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
@@ -45,21 +49,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public AuthenticationDetailDto register(UserDto createUserDto) {
-        User user = User.builder()
-                .name(createUserDto.getName())
-                .email(createUserDto.getEmail())
-                .password(passwordEncoder.encode(createUserDto.getPassword()))
-                .build();
+        UserDetailDto userDetailDto = userService.add(createUserDto);
 
-        List<Role> roles = createUserDto.getRoleIds().stream()
-                .map(roleRepository::findById)
-                .map(optionalRole -> optionalRole.orElseThrow(RoleException.NotFoundException::new))
-                .collect(Collectors.toList());
-        user.setRoles(roles);
-
-        userRepository.save(user);
-
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(userDetailDto.getEmail());
         final String jwtToken = jwtService.generateToken(userDetails);
         final String refreshToken = jwtService.generateRefreshToken(userDetails);
 
@@ -100,6 +92,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
         if (!jwtService.isTokenValid(refreshToken, userDetails)) {
             ResponseHelper.respondWithUnauthorizedError(response, "Refresh token is not valid");
             return;

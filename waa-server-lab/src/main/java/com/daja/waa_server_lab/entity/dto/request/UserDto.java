@@ -13,7 +13,10 @@ import java.util.List;
 @Builder
 public class UserDto {
     private String name;
+
     private String email;
+
     private String password;
+
     private List<Long> roleIds;
 }

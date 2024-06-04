@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostDetailDto {
     private Long id;
+
     private String title;
+
     private String content;
 }
