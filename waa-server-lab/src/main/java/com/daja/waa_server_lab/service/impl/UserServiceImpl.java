@@ -21,11 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements IUserService {
     private final IUserRepository userRepository;
-
     private final IRoleRepository roleRepository;
-
     private final MapperConfiguration mapperConfiguration;
-
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, MapperConfiguration mapperConfiguration, PasswordEncoder passwordEncoder) {
@@ -39,7 +36,6 @@ public class UserServiceImpl implements IUserService {
     public List<UserDetailDto> findAll(Map<String, String> filters, Integer postCount, String postTitle) {
         List<User> users = userRepository.findAll();
 
-
         if (postCount != null && postCount > 0) {
             List<Tuple> results = userRepository.findUsersWithPostsByCount(postCount);
 
@@ -48,16 +44,15 @@ public class UserServiceImpl implements IUserService {
                             .id(result.get("id", Long.class))
                             .name(result.get("name", String.class))
                             .build())
-                    .toList();
+                    .collect(Collectors.toList());
         }
-
 
         if (filters != null && !filters.isEmpty()) {
             if (filters.containsKey("name")) {
                 String name = filters.get("name");
                 users = users.stream()
                         .filter(user -> user.getName().contains(name))
-                        .toList();
+                        .collect(Collectors.toList());
             }
         }
 
@@ -65,14 +60,12 @@ public class UserServiceImpl implements IUserService {
             users = userRepository.findUsersByPostTitle(postTitle);
         }
 
-
-        return users.stream().map(i -> mapperConfiguration.convert(i, UserDetailDto.class)).toList();
+        return users.stream().map(i -> mapperConfiguration.convert(i, UserDetailDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public UserDetailDto findById(Long id) {
         User foundUser = userRepository.findById(id).orElseThrow(UserException.NotFoundException::new);
-        System.out.println(foundUser.getPosts());
         return mapperConfiguration.convert(foundUser, UserDetailDto.class);
     }
 
@@ -86,9 +79,9 @@ public class UserServiceImpl implements IUserService {
                 .collect(Collectors.toList());
 
         user.setRoles(roles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User addedUser = userRepository.save(user);
-
         return mapperConfiguration.convert(addedUser, UserDetailDto.class);
     }
 
@@ -101,25 +94,32 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDetailDto update(Long id, UserDto updatedDto) {
-        UserDetailDto foundUser = findById(id);
-        User updatedUser = mapperConfiguration.convert(foundUser, User.class);
+        User foundUser = userRepository.findById(id).orElseThrow(UserException.NotFoundException::new);
 
         if (updatedDto.getName() != null)
-            updatedUser.setName(updatedDto.getName());
+            foundUser.setName(updatedDto.getName());
 
         if (updatedDto.getEmail() != null)
-            updatedUser.setEmail(updatedDto.getEmail());
+            foundUser.setEmail(updatedDto.getEmail());
 
         if (updatedDto.getPassword() != null)
-            updatedUser.setPassword(passwordEncoder.encode(updatedDto.getPassword()));
+            foundUser.setPassword(passwordEncoder.encode(updatedDto.getPassword()));
 
-        User savedUser = userRepository.save(updatedUser);
+        if (updatedDto.getRoleIds() != null) {
+            List<Role> roles = updatedDto.getRoleIds().stream()
+                    .map(roleRepository::findById)
+                    .map(optionalRole -> optionalRole.orElseThrow(RoleException.NotFoundException::new))
+                    .collect(Collectors.toList());
 
+            foundUser.setRoles(roles);
+        }
+
+        User savedUser = userRepository.save(foundUser);
         return mapperConfiguration.convert(savedUser, UserDetailDto.class);
     }
 
     @Override
     public Integer getUserListCount() {
-        return userRepository.findAll().size();
+        return (int) userRepository.count();
     }
 }

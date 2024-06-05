@@ -33,10 +33,19 @@ public class ResponseHelper {
     }
 
     public static void respondWithUnauthorizedError(HttpServletResponse response, String message) throws IOException {
-        Map<String, String> errors = Collections.singletonMap("IOException", message);
+        Map<String, String> errors = Collections.singletonMap("Unauthorized", message);
 
         CustomResponse<Object> responseBody = new CustomResponse<>(false, "An error occurred!", null, errors);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), responseBody);
+    }
+
+    public static void respondWithForbiddenError(HttpServletResponse response, String message) throws IOException {
+        Map<String, String> errors = Collections.singletonMap("Forbidden", message);
+
+        CustomResponse<Object> responseBody = new CustomResponse<>(false, "Access is denied!", null, errors);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), responseBody);
     }

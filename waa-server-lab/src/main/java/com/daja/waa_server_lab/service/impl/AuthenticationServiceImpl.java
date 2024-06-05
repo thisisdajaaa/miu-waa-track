@@ -1,15 +1,10 @@
 package com.daja.waa_server_lab.service.impl;
 
-import com.daja.waa_server_lab.entity.Role;
-import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.LoginDto;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.AuthenticationDetailDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
-import com.daja.waa_server_lab.exception.RoleException;
 import com.daja.waa_server_lab.helper.ResponseHelper;
-import com.daja.waa_server_lab.repository.IRoleRepository;
-import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IAuthenticationService;
 import com.daja.waa_server_lab.service.spec.IJWTService;
 import com.daja.waa_server_lab.service.spec.IUserService;
@@ -20,27 +15,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationServiceImpl implements IAuthenticationService {
-    private final IUserRepository userRepository;
-    private final IRoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final IJWTService jwtService;
 
-    public AuthenticationServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder passwordEncoder, IUserService userService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AuthenticationServiceImpl(IUserService userService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;

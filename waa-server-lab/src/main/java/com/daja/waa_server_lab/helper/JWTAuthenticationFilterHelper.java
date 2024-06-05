@@ -19,8 +19,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JWTAuthenticationFilterHelper extends OncePerRequestFilter {
-    private final IJWTService jwtService;
 
+    private final IJWTService jwtService;
     private final UserDetailsService userDetailsService;
 
     public JWTAuthenticationFilterHelper(IJWTService jwtService, UserDetailsService userDetailsService) {
@@ -59,7 +59,7 @@ public class JWTAuthenticationFilterHelper extends OncePerRequestFilter {
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if (!jwtService.isTokenValid(jwt, userDetails)) {
-                ResponseHelper.respondWithUnauthorizedError(response, "JWT token is expired or revoked.");
+                ResponseHelper.respondWithForbiddenError(response, "JWT token is expired or revoked.");
                 return;
             }
 
