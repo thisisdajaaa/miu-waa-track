@@ -9,7 +9,6 @@ import com.daja.waa_server_lab.exception.CommentException;
 import com.daja.waa_server_lab.repository.ICommentRepository;
 import com.daja.waa_server_lab.service.spec.ICommentService;
 import com.daja.waa_server_lab.service.spec.IPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +17,11 @@ import java.util.Map;
 @Service
 public class CommentServiceImpl implements ICommentService {
     private final ICommentRepository commentRepository;
+
     private final IPostService postService;
+
     private final MapperConfiguration mapperConfiguration;
 
-    @Autowired
     public CommentServiceImpl(ICommentRepository commentRepository, IPostService postService,
                               MapperConfiguration mapperConfiguration) {
         this.commentRepository = commentRepository;

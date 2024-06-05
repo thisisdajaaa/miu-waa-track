@@ -7,7 +7,6 @@ import com.daja.waa_server_lab.service.spec.ILoggerService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,6 @@ public class LoggingAspect {
 
     private final IExceptionLoggerService exceptionLoggerService;
 
-    @Autowired
     public LoggingAspect(ILoggerService loggerService, IExceptionLoggerService exceptionLoggerService) {
         this.loggerService = loggerService;
         this.exceptionLoggerService = exceptionLoggerService;

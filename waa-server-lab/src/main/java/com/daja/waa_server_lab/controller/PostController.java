@@ -6,7 +6,6 @@ import com.daja.waa_server_lab.helper.QueryParamHelper;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.IPostService;
 import com.daja.waa_server_lab.service.spec.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,9 @@ import java.util.Map;
 @RequestMapping("/api/v1/users/{userId}/posts")
 public class PostController {
     private final IPostService postService;
+
     private final IUserService userService;
 
-    @Autowired
     public PostController(IPostService postService, IUserService userService) {
         this.postService = postService;
         this.userService = userService;

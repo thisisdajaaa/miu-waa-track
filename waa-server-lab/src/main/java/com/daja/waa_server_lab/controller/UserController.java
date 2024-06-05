@@ -6,7 +6,6 @@ import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.helper.QueryParamHelper;
 import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import java.util.Map;
 public class UserController {
     private final IUserService userService;
 
-    @Autowired
     public UserController(IUserService userService) {
         this.userService = userService;
     }

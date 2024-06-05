@@ -7,7 +7,6 @@ import com.daja.waa_server_lab.helper.ResponseHelper;
 import com.daja.waa_server_lab.service.spec.ICommentService;
 import com.daja.waa_server_lab.service.spec.IPostService;
 import com.daja.waa_server_lab.service.spec.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/users/{userId}/posts/{postId}/comments")
 public class CommentController {
     private final ICommentService commentService;
+
     private final IPostService postService;
+
     private final IUserService userService;
 
-    @Autowired
     public CommentController(ICommentService commentService, IPostService postService, IUserService userService) {
         this.commentService = commentService;
         this.postService = postService;
