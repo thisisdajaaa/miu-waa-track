@@ -56,7 +56,7 @@ const DashboardPage: FC = () => {
           </Button>
         </div>
 
-        {selectedPost && <PostDetail {...memoizedPost} />}
+        {memoizedPost && <PostDetail {...memoizedPost} />}
       </div>
     </section>
   );

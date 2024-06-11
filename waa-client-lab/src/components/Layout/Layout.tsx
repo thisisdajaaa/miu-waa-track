@@ -1,8 +1,21 @@
 import { FC, PropsWithChildren } from "react";
 import Header from "../Header";
+import { useIsLoggedIn } from "@/hooks";
 
 const Layout: FC<PropsWithChildren> = (props) => {
   const { children } = props;
+
+  const isLoggedIn = useIsLoggedIn();
+
+  if (!isLoggedIn)
+    return (
+      <div
+        className="relative flex min-h-screen items-center justify-center py-12 px-4"
+        data-testid="layout-unauthenticated"
+      >
+        {children}
+      </div>
+    );
 
   return (
     <div className="flex min-h-screen flex-col">
