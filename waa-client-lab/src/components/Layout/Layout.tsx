@@ -1,10 +1,15 @@
 import { FC, PropsWithChildren, useCallback, useEffect } from "react";
-import Header from "../Header";
-import { useAppDispatch, useIsLoggedIn } from "@/hooks";
-import { getCurrentLoggedUserAPI } from "@/services/users";
-import { actions } from "@/redux/authentication";
-import { UserDetailResponse } from "@/types/server/user";
 import toast from "react-hot-toast";
+
+import { useAppDispatch, useIsLoggedIn } from "@/hooks";
+
+import { actions } from "@/redux/authentication";
+
+import { getCurrentLoggedUserAPI } from "@/services/users";
+
+import { UserDetailResponse } from "@/types/server/user";
+
+import Header from "../Header";
 
 const Layout: FC<PropsWithChildren> = (props) => {
   const { children } = props;
@@ -14,10 +19,10 @@ const Layout: FC<PropsWithChildren> = (props) => {
   const isLoggedIn = useIsLoggedIn();
 
   const handleLoad = useCallback(async () => {
-    const { success, data, formattedError } = await getCurrentLoggedUserAPI();
+    const { success, data, message } = await getCurrentLoggedUserAPI();
 
     if (!success) {
-      toast.error(formattedError as string);
+      toast.error(message as string);
       return;
     }
 

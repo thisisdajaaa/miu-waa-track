@@ -1,4 +1,5 @@
-import { UserDetailResponse } from "@/types/server/user";
+import type { UserDetailResponse } from "@/types/server/user";
+
 import type { AuthenticationState } from "./models";
 
 export const initialUserDetails: UserDetailResponse = {

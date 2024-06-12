@@ -1,6 +1,7 @@
-import { ApiResponse } from "@/types/server/config";
-import { UserDetailResponse } from "@/types/server/user";
 import { onParseResponse } from "@/utils/helpers";
+
+import type { ApiResponse } from "@/types/server/config";
+import type { UserDetailResponse } from "@/types/server/user";
 
 export const getCurrentLoggedUserAPI = async (): Promise<
   ApiResponse<UserDetailResponse>

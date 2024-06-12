@@ -1,14 +1,18 @@
-import { FC, useState, useCallback, useEffect, useRef } from "react";
-import Posts from "./components/Posts";
-import type { IPost, PostForm } from "./types";
-import { getPostsAPI } from "@/services/posts";
-import toast from "react-hot-toast";
-import Loading from "@/components/Loading";
-import Button from "@/components/Button";
-import PostFormModal from "./components/PostFormModal";
-import PostDetailModal from "./components/PostDetailModal";
 import { FormikContext, useFormik } from "formik";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+
+import Button from "@/components/Button";
+import Loading from "@/components/Loading";
+
+import { addPostAPI, deletePostAPI, getPostsAPI } from "@/services/posts";
+
+import PostDetailModal from "./components/PostDetailModal";
+import PostFormModal from "./components/PostFormModal";
+import Posts from "./components/Posts";
 import { initialPostForm } from "./fixtures";
+import type { IPost, PostForm } from "./types";
+import { PostFormValidationSchema } from "./validations";
 
 const DashboardPage: FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -19,12 +23,12 @@ const DashboardPage: FC = () => {
   const postDetailModalRef = useRef<HTMLDialogElement | null>(null);
 
   const handleLoad = useCallback(async () => {
-    const { success, data, formattedError } = await getPostsAPI();
+    const { success, data, message } = await getPostsAPI();
 
     setIsLoading(false);
 
     if (!success) {
-      toast.error(formattedError as string);
+      toast.error(message as string);
       return;
     }
 
@@ -41,11 +45,22 @@ const DashboardPage: FC = () => {
   }, [handleLoad]);
 
   const handleSubmit = async (values: PostForm) => {
-    console.log(values);
+    const { success, message } = await addPostAPI(values);
+
+    if (!success) {
+      toast.error(message as string);
+      return;
+    }
+
+    toast.success(message as string);
+
+    handleClosePostFormModal();
+    handleLoad();
   };
 
   const formikBag = useFormik<PostForm>({
     initialValues: initialPostForm,
+    validationSchema: PostFormValidationSchema,
     enableReinitialize: true,
     validateOnChange: false,
     validateOnBlur: false,
@@ -58,8 +73,9 @@ const DashboardPage: FC = () => {
   };
 
   const handleShowPostFormModal = useCallback(() => {
+    formikBag.resetForm();
     postFormModalRef.current?.showModal();
-  }, []);
+  }, [formikBag]);
 
   const handleClosePostFormModal = useCallback(() => {
     postFormModalRef.current?.close();
@@ -68,6 +84,20 @@ const DashboardPage: FC = () => {
   const handleClosePostDetailModal = useCallback(() => {
     postDetailModalRef.current?.close();
   }, []);
+
+  const handleDeletePost = useCallback(async () => {
+    const { status } = await deletePostAPI(selectedPost as number);
+
+    if (status !== 204) {
+      toast.error("Something went wrong!");
+      return;
+    }
+
+    toast.success("Successfully deleted the post!");
+
+    handleClosePostDetailModal();
+    handleLoad();
+  }, [handleClosePostDetailModal, handleLoad, selectedPost]);
 
   return (
     <section>
@@ -87,6 +117,7 @@ const DashboardPage: FC = () => {
           ref={postDetailModalRef}
           selectedPost={selectedPost as number}
           handleClose={handleClosePostDetailModal}
+          handleDeletePost={handleDeletePost}
         />
       )}
 

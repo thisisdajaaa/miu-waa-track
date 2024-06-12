@@ -1,7 +1,10 @@
-import { store } from "@/redux/store";
-import { refreshToken } from "@/services/authentication";
-import logger from "@/utils/logger";
 import axios, { AxiosInstance } from "axios";
+
+import logger from "@/utils/logger";
+
+import { store } from "@/redux/store";
+
+import { refreshToken } from "@/services/authentication";
 
 const baseInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_PUBLIC_BASE_URL,

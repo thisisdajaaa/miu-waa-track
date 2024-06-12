@@ -1,42 +1,39 @@
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import { FaThumbsUp, FaCommentAlt, FaShareSquare } from "react-icons/fa";
-import mockAvatar from "@/assets/images/mock-avatar.jpg";
-import { getPostAPI } from "@/services/posts";
 import toast from "react-hot-toast";
-import Modal from "@/components/Modal";
-import Input from "@/components/Input";
+import { FaCommentAlt, FaShareSquare, FaThumbsUp } from "react-icons/fa";
+
+import { useAppSelector } from "@/hooks";
+
 import Button from "@/components/Button";
-import type { IPost } from "../../types";
+import Input from "@/components/Input";
+import Modal from "@/components/Modal";
+
+import { selectors } from "@/redux/authentication";
+
+import { getPostAPI } from "@/services/posts";
+
+import { CommentDetailResponse } from "@/types/server/comment";
+
+import mockAvatar from "@/assets/images/mock-avatar.jpg";
+
 import type { PostDetailModalProps } from "./types";
+import type { IPost } from "../../types";
 
 const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
   (props, ref) => {
-    const { selectedPost, handleClose } = props;
+    const { selectedPost, handleClose, handleDeletePost } = props;
 
     const [details, setDetails] = useState<IPost | null>(null);
     const [newComment, setNewComment] = useState("");
-    const [allComments, setAllComments] = useState<
-      { author: string; text: string }[]
-    >([
-      {
-        author: "asd",
-        text: "teasdasdasdasdasdas",
-      },
-      {
-        author: "asd",
-        text: "teasdasdasdasdasdas",
-      },
-      {
-        author: "asd",
-        text: "teasdasdasdasdasdas",
-      },
-    ]);
+    const [allComments, setAllComments] = useState<CommentDetailResponse[]>([]);
+
+    const userDetails = useAppSelector(selectors.userDetails);
 
     const handleLoad = useCallback(async () => {
-      const { success, data, formattedError } = await getPostAPI(selectedPost);
+      const { success, data, message } = await getPostAPI(selectedPost);
 
       if (!success) {
-        toast.error(formattedError as string);
+        toast.error(message as string);
         return;
       }
 
@@ -45,25 +42,18 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
         title: data?.title || "",
         content: data?.content || "",
         author: data?.author?.name || "",
+        createdAt: data?.createdAt || "",
+        createdBy: data?.createdBy || "",
+        comments: data?.comments || [],
       };
 
       setDetails(formattedPost);
-      //   setAllComments(data?.comments || []);
+      setAllComments(data?.comments || []);
     }, [selectedPost]);
 
     useEffect(() => {
       handleLoad();
     }, [handleLoad]);
-
-    const handleAddComment = () => {
-      if (newComment.trim()) {
-        setAllComments([
-          ...allComments,
-          { author: "Current User", text: newComment },
-        ]);
-        setNewComment("");
-      }
-    };
 
     return (
       <Modal
@@ -81,12 +71,15 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
             <div>
               <p className="font-bold text-lg">{details?.author}</p>
               <p className="text-sm text-gray-500">
-                {new Date().toLocaleString()}
+                {new Date(details?.createdAt as string).toLocaleString()}
               </p>
             </div>
           </div>
+
           <h3 className="font-semibold">{details?.title}</h3>
+
           <p>{details?.content}</p>
+
           <div className="flex justify-around mt-4">
             <Button variant="ghost">
               <FaThumbsUp className="mr-2" /> Like
@@ -97,7 +90,23 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
             <Button variant="ghost">
               <FaShareSquare className="mr-2" /> Share
             </Button>
+
+            {userDetails.name === details?.createdBy && (
+              <>
+                <Button variant="ghost" className="text-primary">
+                  <FaCommentAlt className="mr-2" /> Edit
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="text-red-500"
+                  onClick={() => handleDeletePost()}
+                >
+                  <FaCommentAlt className="mr-2" /> Delete
+                </Button>
+              </>
+            )}
           </div>
+
           <div className="mt-4">
             {allComments.map((comment, index) => (
               <div key={index} className="flex items-start gap-3 mt-3">
@@ -107,8 +116,8 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
                   className="w-8 h-8 rounded-full"
                 />
                 <div className="flex flex-col bg-gray-100 p-3 rounded-lg shadow-sm">
-                  <p className="font-bold">{comment.author}</p>
-                  <p>{comment.text}</p>
+                  <p className="font-bold">{comment.createdBy}</p>
+                  <p>{comment.content}</p>
                 </div>
               </div>
             ))}
@@ -126,9 +135,7 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
-            <Button variant="secondary" onClick={handleAddComment}>
-              Post
-            </Button>
+            <Button variant="secondary">Post</Button>
           </div>
         </div>
       </Modal>

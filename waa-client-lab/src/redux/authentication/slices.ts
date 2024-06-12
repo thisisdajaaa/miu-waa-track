@@ -1,6 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import type { UserDetailResponse } from "@/types/server/user";
+
 import { initialAuthenticationState, initialUserDetails } from "./data";
-import { UserDetailResponse } from "@/types/server/user";
 
 const authenticationSlice = createSlice({
   name: "authentication",

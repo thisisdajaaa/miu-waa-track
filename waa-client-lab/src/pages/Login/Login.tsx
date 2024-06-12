@@ -1,18 +1,24 @@
-import FormInput from "@/components/Formik/FormInput";
+import { FormikContext, useFormik } from "formik";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { MdOutlineLock, MdOutlinePermIdentity } from "react-icons/md";
-import type { LoginForm } from "./types";
-import toast from "react-hot-toast";
-import { FormikContext, useFormik } from "formik";
-import { initialLoginForm } from "./fixtures";
-import { LoginFormValidationSchema } from "./validations";
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
-import { loginAPI } from "@/services/authentication";
+
 import { useAppDispatch } from "@/hooks";
+
+import Button from "@/components/Button";
+import FormInput from "@/components/Formik/FormInput";
+
 import { actions } from "@/redux/authentication";
+
+import { loginAPI } from "@/services/authentication";
+
 import { AuthenticationDetailResponse } from "@/types/server/authentication";
+
+import { initialLoginForm } from "./fixtures";
+import type { LoginForm } from "./types";
+import { LoginFormValidationSchema } from "./validations";
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
@@ -26,10 +32,10 @@ const LoginPage: FC = () => {
   };
 
   const handleSubmit = async (values: LoginForm) => {
-    const { success, data, formattedError, message } = await loginAPI(values);
+    const { success, data, message } = await loginAPI(values);
 
     if (!success) {
-      toast.error(formattedError as string);
+      toast.error(message as string);
       return;
     }
 

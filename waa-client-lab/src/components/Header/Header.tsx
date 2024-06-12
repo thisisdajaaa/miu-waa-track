@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import { FC, useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useOnClickOutsideElement } from "@/hooks";
 
+import { actions } from "@/redux/authentication";
+
 import { logoutAPI } from "@/services/authentication";
 
-import { useNavigate } from "react-router-dom";
-import { actions } from "@/redux/authentication";
 import mockAvatar from "@/assets/images/mock-avatar.jpg";
 
 const Header: FC = () => {
@@ -43,7 +44,7 @@ const Header: FC = () => {
     <div className="navbar z-30 bg-base-100 shadow-md">
       <div className="flex-1 items-center">
         <button className="btn btn-ghost text-xl" onClick={handleHome}>
-          <h1 className="ml-3 text-[1.2rem] sm:text-[1.25rem]">CS545</h1>
+          <h1 className="text-[1.2rem] sm:text-[1.25rem]">CS545</h1>
         </button>
       </div>
       <div className="flex gap-2">

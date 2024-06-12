@@ -1,8 +1,10 @@
 import { forwardRef, PropsWithChildren } from "react";
 import { FaX } from "react-icons/fa6";
+
+import clsxm from "@/utils/clsxm";
+
 import type { ModalProps } from "./types";
 import Button from "../Button";
-import clsxm from "@/utils/clsxm";
 
 const Modal = forwardRef<HTMLDialogElement, PropsWithChildren<ModalProps>>(
   (props, ref) => {

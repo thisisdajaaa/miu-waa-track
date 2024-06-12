@@ -1,8 +1,9 @@
 import { ErrorMessage } from "formik";
 import { FC } from "react";
 
-import type { ValidationMessageProps } from "./types";
 import useFieldError from "@/hooks/useFieldError";
+
+import type { ValidationMessageProps } from "./types";
 
 const ValidationMessage: FC<ValidationMessageProps> = (props) => {
   const { name } = props;

@@ -1,12 +1,15 @@
 import { FC } from "react";
-import { FaThumbsUp, FaCommentAlt, FaShareSquare } from "react-icons/fa";
-import mockAvatar from "@/assets/images/mock-avatar.jpg";
-import type { PostProps } from "./types";
+import { FaCommentAlt, FaShareSquare, FaThumbsUp } from "react-icons/fa";
+
 import Button from "@/components/Button";
+
+import mockAvatar from "@/assets/images/mock-avatar.jpg";
+
+import type { PostProps } from "./types";
 
 const Post: FC<PostProps> = (props) => {
   const { details, onSelectPost } = props;
-  const { id, title, author } = details;
+  const { id, title, author, createdAt } = details;
 
   const handleSelectPost = () => onSelectPost(id);
 
@@ -23,7 +26,9 @@ const Post: FC<PostProps> = (props) => {
         />
         <div>
           <p className="font-bold text-lg">{author}</p>
-          <p className="text-sm text-gray-500">{new Date().toLocaleString()}</p>
+          <p className="text-sm text-gray-500">
+            {new Date(createdAt || "").toLocaleString()}
+          </p>
         </div>
       </div>
       <div className="mt-4">

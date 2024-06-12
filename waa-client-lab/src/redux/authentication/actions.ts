@@ -1,6 +1,7 @@
 import { UserDetailResponse } from "@/types/server/user";
-import { AppDispatch, AppThunk } from "../store";
+
 import { authenticationActions } from "./slices";
+import { AppDispatch, AppThunk } from "../store";
 
 const {
   setUserDetails,

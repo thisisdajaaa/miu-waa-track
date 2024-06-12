@@ -1,11 +1,13 @@
-import { forwardRef } from "react";
-import { PostFormModalProps } from "./types";
-import { PostForm } from "../../types";
-import Modal from "@/components/Modal";
-import FormInput from "@/components/Formik/FormInput";
-import Button from "@/components/Button";
 import { useFormikContext } from "formik";
+import { forwardRef } from "react";
+
+import Button from "@/components/Button";
+import FormInput from "@/components/Formik/FormInput";
 import FormTextArea from "@/components/Formik/FormTextArea";
+import Modal from "@/components/Modal";
+
+import type { PostFormModalProps } from "./types";
+import type { PostForm } from "../../types";
 
 const PostFormModal = forwardRef<HTMLDialogElement, PostFormModalProps>(
   (props, ref) => {

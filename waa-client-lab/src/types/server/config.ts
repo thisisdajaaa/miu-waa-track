@@ -15,6 +15,6 @@ export type ApiResponse<T> = {
   pagination?: Pagination;
   message?: string;
   errors?: { [key: string]: string };
-  formattedError?: string;
   stack?: string;
+  status?: number;
 };
