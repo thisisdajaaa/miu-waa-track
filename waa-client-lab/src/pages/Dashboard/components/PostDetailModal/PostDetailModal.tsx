@@ -12,7 +12,7 @@ import { selectors } from "@/redux/authentication";
 
 import { getPostAPI } from "@/services/posts";
 
-import { CommentDetailResponse } from "@/types/server/comment";
+import type { CommentDetailResponse } from "@/types/server/comment";
 
 import mockAvatar from "@/assets/images/mock-avatar.jpg";
 
@@ -24,7 +24,7 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
     const { selectedPost, handleClose, handleDeletePost } = props;
 
     const [details, setDetails] = useState<IPost | null>(null);
-    const [newComment, setNewComment] = useState("");
+    const [newComment, setNewComment] = useState<string>("");
     const [allComments, setAllComments] = useState<CommentDetailResponse[]>([]);
 
     const userDetails = useAppSelector(selectors.userDetails);
