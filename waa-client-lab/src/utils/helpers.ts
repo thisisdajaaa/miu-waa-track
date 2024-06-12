@@ -26,3 +26,5 @@ export const onParseResponse = async <T>(args: AxiosRequestConfig) => {
 
   return formattedResponse;
 };
+
+export const noop = () => {};

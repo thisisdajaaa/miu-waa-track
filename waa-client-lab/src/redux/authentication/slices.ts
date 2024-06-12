@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { initialAuthenticationState } from "./data";
+import { initialAuthenticationState, initialUserDetails } from "./data";
+import { UserDetailResponse } from "@/types/server/user";
 
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState: initialAuthenticationState,
   reducers: {
-    setEmail: (state, { payload }: PayloadAction<string>) => {
-      state.email = payload;
+    setUserDetails: (state, { payload }: PayloadAction<UserDetailResponse>) => {
+      state.userDetails = payload;
     },
     setAccessToken: (state, { payload }: PayloadAction<string>) => {
       state.accessToken = payload;
@@ -15,7 +16,7 @@ const authenticationSlice = createSlice({
       state.refreshToken = payload;
     },
     setResetAuthentication: (state) => {
-      state.email = "";
+      state.userDetails = initialUserDetails;
       state.accessToken = "";
       state.refreshToken = "";
     },

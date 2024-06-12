@@ -1,11 +1,32 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useCallback, useEffect } from "react";
 import Header from "../Header";
-import { useIsLoggedIn } from "@/hooks";
+import { useAppDispatch, useIsLoggedIn } from "@/hooks";
+import { getCurrentLoggedUserAPI } from "@/services/users";
+import { actions } from "@/redux/authentication";
+import { UserDetailResponse } from "@/types/server/user";
+import toast from "react-hot-toast";
 
 const Layout: FC<PropsWithChildren> = (props) => {
   const { children } = props;
 
+  const dispatch = useAppDispatch();
+
   const isLoggedIn = useIsLoggedIn();
+
+  const handleLoad = useCallback(async () => {
+    const { success, data, formattedError } = await getCurrentLoggedUserAPI();
+
+    if (!success) {
+      toast.error(formattedError as string);
+      return;
+    }
+
+    dispatch(actions.callSetUserDetails(data as UserDetailResponse));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn) handleLoad();
+  }, [handleLoad, isLoggedIn]);
 
   if (!isLoggedIn)
     return (

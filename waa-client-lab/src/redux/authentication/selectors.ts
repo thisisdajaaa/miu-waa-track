@@ -1,8 +1,8 @@
 import { RootState } from "../store";
 import { initialAuthenticationState } from "./data";
 
-const email = (state: RootState) =>
-  state.authentication.email || initialAuthenticationState.email;
+const userDetails = (state: RootState) =>
+  state.authentication.userDetails || initialAuthenticationState.userDetails;
 
 const accessToken = (state: RootState) =>
   state.authentication.accessToken || initialAuthenticationState.accessToken;
@@ -10,6 +10,6 @@ const accessToken = (state: RootState) =>
 const refreshToken = (state: RootState) =>
   state.authentication.refreshToken || initialAuthenticationState.refreshToken;
 
-const selectors = { email, accessToken, refreshToken };
+const selectors = { userDetails, accessToken, refreshToken };
 
 export default selectors;

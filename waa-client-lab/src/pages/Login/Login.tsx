@@ -21,13 +21,12 @@ const LoginPage: FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const storeStateValues = (data: AuthenticationDetailResponse) => {
-    dispatch(actions.callSetEmail(data?.email || ""));
     dispatch(actions.callSetAccessToken(data?.accessToken || ""));
     dispatch(actions.callSetRefreshToken(data?.refreshToken || ""));
   };
 
   const handleSubmit = async (values: LoginForm) => {
-    const { success, data, formattedError } = await loginAPI(values);
+    const { success, data, formattedError, message } = await loginAPI(values);
 
     if (!success) {
       toast.error(formattedError as string);
@@ -36,7 +35,7 @@ const LoginPage: FC = () => {
 
     storeStateValues(data as AuthenticationDetailResponse);
 
-    toast.success("Successfully logged in user!");
+    toast.success(message as string);
 
     navigate("/");
   };

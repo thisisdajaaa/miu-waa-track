@@ -1,63 +1,104 @@
-import { ChangeEvent, FC, useMemo, useState } from "react";
+import { FC, useState, useCallback, useEffect, useRef } from "react";
 import Posts from "./components/Posts";
-import { mockPostList } from "./fixtures";
-import type { IPost } from "./types";
-import PostDetail from "./components/PostDetail";
-import Input from "@/components/Input";
+import type { IPost, PostForm } from "./types";
+import { getPostsAPI } from "@/services/posts";
+import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
 import Button from "@/components/Button";
+import PostFormModal from "./components/PostFormModal";
+import PostDetailModal from "./components/PostDetailModal";
+import { FormikContext, useFormik } from "formik";
+import { initialPostForm } from "./fixtures";
 
 const DashboardPage: FC = () => {
-  const [posts, setPosts] = useState<IPost[]>(mockPostList);
-  const [title, setTitle] = useState<string>(mockPostList[0]?.title || "");
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedPost, setSelectedPost] = useState<number | null>(null);
 
-  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) =>
-    setTitle(event.target.value);
+  const postFormModalRef = useRef<HTMLDialogElement | null>(null);
+  const postDetailModalRef = useRef<HTMLDialogElement | null>(null);
 
-  const handleUpdate = () => {
-    if (!!posts.length && Array.isArray(posts) && !!title) {
-      setPosts((prev) => {
-        return prev.map((item, index) => {
-          if (index === 0) {
-            return {
-              ...item,
-              title,
-            };
-          }
+  const handleLoad = useCallback(async () => {
+    const { success, data, formattedError } = await getPostsAPI();
 
-          return item;
-        });
-      });
+    setIsLoading(false);
+
+    if (!success) {
+      toast.error(formattedError as string);
+      return;
     }
+
+    const transformedPosts = data?.map((item) => ({
+      ...item,
+      author: item.author.name,
+    })) as IPost[];
+
+    setPosts(transformedPosts);
+  }, []);
+
+  useEffect(() => {
+    handleLoad();
+  }, [handleLoad]);
+
+  const handleSubmit = async (values: PostForm) => {
+    console.log(values);
   };
 
-  const handleSelectPost = (postId: number) => setSelectedPost(postId);
+  const formikBag = useFormik<PostForm>({
+    initialValues: initialPostForm,
+    enableReinitialize: true,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: handleSubmit,
+  });
 
-  const memoizedPost = useMemo(
-    () => posts.find(({ id }) => id === selectedPost) as IPost,
-    [posts, selectedPost]
-  );
+  const handleSelectPost = (postId: number) => {
+    setSelectedPost(postId);
+    postDetailModalRef.current?.showModal();
+  };
+
+  const handleShowPostFormModal = useCallback(() => {
+    postFormModalRef.current?.showModal();
+  }, []);
+
+  const handleClosePostFormModal = useCallback(() => {
+    postFormModalRef.current?.close();
+  }, []);
+
+  const handleClosePostDetailModal = useCallback(() => {
+    postDetailModalRef.current?.close();
+  }, []);
 
   return (
     <section>
-      <h2 className="font-bold text-lg">Dashboard</h2>
-
-      <div className="mt-8 flex flex-col gap-14">
-        <Posts items={posts} onSelectPost={handleSelectPost} />
-
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-2/4">
-          <Input
-            placeholder="Enter Title"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <Button className="sm:w-64" onClick={handleUpdate}>
-            Change Title
-          </Button>
-        </div>
-
-        {memoizedPost && <PostDetail {...memoizedPost} />}
+      <div className="flex justify-end">
+        <Button onClick={handleShowPostFormModal}>Add Post</Button>
       </div>
+
+      <FormikContext.Provider value={formikBag}>
+        <PostFormModal
+          ref={postFormModalRef}
+          handleClose={handleClosePostFormModal}
+        />
+      </FormikContext.Provider>
+
+      {selectedPost && (
+        <PostDetailModal
+          ref={postDetailModalRef}
+          selectedPost={selectedPost as number}
+          handleClose={handleClosePostDetailModal}
+        />
+      )}
+
+      {isLoading ? (
+        <div className="flex justify-center mt-10">
+          <Loading fullscreen={false} />
+        </div>
+      ) : (
+        <div className="mt-8 flex flex-col gap-6">
+          <Posts items={posts} onSelectPost={handleSelectPost} />
+        </div>
+      )}
     </section>
   );
 };

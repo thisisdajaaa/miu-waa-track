@@ -6,7 +6,7 @@ const Posts: FC<PostsProps> = (props) => {
   const { items, onSelectPost } = props;
 
   return (
-    <div className="grid sm:grid-cols-3 gap-10">
+    <div className="flex flex-col gap-6">
       {items.map((item) => (
         <Post key={item.id} details={item} onSelectPost={onSelectPost} />
       ))}

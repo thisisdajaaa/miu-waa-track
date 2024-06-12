@@ -1,3 +1,3 @@
-import type { IPost } from "../../../types";
-
-export type PostDetailProps = IPost;
+export type PostDetailProps = {
+  selectedPost: number;
+};
