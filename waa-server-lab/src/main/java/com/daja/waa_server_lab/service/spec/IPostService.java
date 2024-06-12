@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 public interface IPostService {
-    List<PostDetailDto> findAll(Map<String, String> filters);
+    List<PostDetailDto> findAll(Boolean isUserPost, Map<String, String> filters);
 
     PostDetailDto findById(Long id);
 
-    PostDetailDto add(Long userId, PostDto postDto);
+    PostDetailDto add(PostDto postDto);
 
     PostDetailDto delete(Long id);
 
     PostDetailDto update(Long id, PostDto updatedDto);
 
-    PostDetailDto findByUserIdAndPostId(Long userId, Long postId);
+    PostDetailDto findByUserIdAndPostId(Long postId);
 }

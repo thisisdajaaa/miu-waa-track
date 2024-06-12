@@ -1,5 +1,7 @@
 package com.daja.waa_server_lab.service.impl;
 
+import com.daja.waa_server_lab.configuration.MapperConfiguration;
+import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.LoginDto;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
 import com.daja.waa_server_lab.entity.dto.response.AuthenticationDetailDto;
@@ -24,13 +26,17 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final IJWTService jwtService;
+    private final MapperConfiguration mapperConfiguration;
 
-    public AuthenticationServiceImpl(IUserService userService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, IJWTService jwtService) {
+    public AuthenticationServiceImpl(IUserService userService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, CustomUserDetailsService customUserDetailsService, IJWTService jwtService, MapperConfiguration mapperConfiguration) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
+        this.customUserDetailsService = customUserDetailsService;
         this.jwtService = jwtService;
+        this.mapperConfiguration = mapperConfiguration;
     }
 
     @Override
@@ -110,5 +116,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         new ObjectMapper().writeValue(response.getOutputStream(), customResponse);
+    }
+
+    @Override
+    public UserDetailDto getAuthenticatedUserDetails() {
+        User foundUser = customUserDetailsService.getAuthenticatedUser();
+        return mapperConfiguration.convert(foundUser, UserDetailDto.class);
     }
 }

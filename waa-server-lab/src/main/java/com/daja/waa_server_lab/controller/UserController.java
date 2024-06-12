@@ -2,9 +2,12 @@ package com.daja.waa_server_lab.controller;
 
 import com.daja.waa_server_lab.aspect.annotation.ExecutionTime;
 import com.daja.waa_server_lab.entity.dto.request.UserDto;
+import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
 import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.helper.QueryParamHelper;
 import com.daja.waa_server_lab.helper.ResponseHelper;
+import com.daja.waa_server_lab.service.spec.IAuthenticationService;
+import com.daja.waa_server_lab.service.spec.IPostService;
 import com.daja.waa_server_lab.service.spec.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,13 @@ import java.util.Map;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final IUserService userService;
+    private final IPostService postService;
+    private final IAuthenticationService authenticationService;
 
-    public UserController(IUserService userService) {
+    public UserController(IUserService userService, IPostService postService, IAuthenticationService authenticationService) {
         this.userService = userService;
+        this.postService = postService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping
@@ -65,6 +72,26 @@ public class UserController {
         return new ResponseEntity<>(
                 new ResponseHelper.CustomResponse<>(true, "Successfully updated a user!",
                         userService.update(id, userDto)),
+                HttpStatus.OK);
+    }
+
+
+    @GetMapping("/me")
+    public ResponseEntity<ResponseHelper.CustomResponse<UserDetailDto>> fetchAuthenticatedUserDetails() {
+        return new ResponseEntity<>(
+                new ResponseHelper.CustomResponse<>(true, "Successfully fetched logged in user details!",
+                        authenticationService.getAuthenticatedUserDetails()),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<ResponseHelper.CustomResponse<List<PostDetailDto>>> getPosts(
+            @RequestParam(required = false) String filter) {
+        Map<String, String> transformedFilter = QueryParamHelper.transformedFilter(filter);
+        return new ResponseEntity<>(
+                new ResponseHelper.CustomResponse<>(
+                        true, "Successfully retrieved user posts!",
+                        postService.findAll(true, transformedFilter)),
                 HttpStatus.OK);
     }
 }

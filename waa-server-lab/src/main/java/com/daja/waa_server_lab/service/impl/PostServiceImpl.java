@@ -5,10 +5,9 @@ import com.daja.waa_server_lab.entity.Post;
 import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.PostDto;
 import com.daja.waa_server_lab.entity.dto.response.PostDetailDto;
+import com.daja.waa_server_lab.entity.dto.response.UserDetailDto;
 import com.daja.waa_server_lab.exception.PostException;
-import com.daja.waa_server_lab.exception.UserException;
 import com.daja.waa_server_lab.repository.IPostRepository;
-import com.daja.waa_server_lab.repository.IUserRepository;
 import com.daja.waa_server_lab.service.spec.IPostService;
 import org.springframework.stereotype.Service;
 
@@ -18,91 +17,100 @@ import java.util.Map;
 @Service
 public class PostServiceImpl implements IPostService {
     private final IPostRepository postRepository;
-
-    private final IUserRepository userRepository;
-
+    private final CustomUserDetailsService customUserDetailsService;
     private final MapperConfiguration mapperConfiguration;
 
-    public PostServiceImpl(IPostRepository postRepository, IUserRepository userRepository,
+    public PostServiceImpl(IPostRepository postRepository, CustomUserDetailsService customUserDetailsService,
                            MapperConfiguration mapperConfiguration) {
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
+        this.customUserDetailsService = customUserDetailsService;
         this.mapperConfiguration = mapperConfiguration;
     }
 
     @Override
-    public List<PostDetailDto> findAll(Map<String, String> filters) {
-        List<Post> posts = postRepository.findAll();
+    public List<PostDetailDto> findAll(Boolean isUserPost, Map<String, String> filters) {
+        List<Post> posts;
+
+        if (isUserPost) {
+            User user = customUserDetailsService.getAuthenticatedUser();
+            posts = user.getPosts();
+        } else {
+            posts = postRepository.findAll();
+        }
 
         if (filters != null && !filters.isEmpty()) {
             if (filters.containsKey("title")) {
                 String title = filters.get("title");
-                posts = postRepository.findByTitle(title);
+                posts = posts.stream()
+                        .filter(post -> post.getTitle().contains(title))
+                        .toList();
             }
 
             if (filters.containsKey("content")) {
                 String content = filters.get("content");
-                posts = postRepository.findByContent(content);
+                posts = posts.stream()
+                        .filter(post -> post.getContent().contains(content))
+                        .toList();
             }
         }
 
         return posts.stream()
-                .map(post -> mapperConfiguration.convert(post, PostDetailDto.class))
+                .map(post -> {
+                    PostDetailDto dto = mapperConfiguration.convert(post, PostDetailDto.class);
+                    dto.setAuthor(mapperConfiguration.convert(post.getAuthor(), UserDetailDto.class));
+                    return dto;
+                })
                 .toList();
     }
 
     @Override
     public PostDetailDto findById(Long id) {
         Post foundPost = postRepository.findById(id).orElseThrow(PostException.NotFoundException::new);
-        return mapperConfiguration.convert(foundPost, PostDetailDto.class);
+        PostDetailDto dto = mapperConfiguration.convert(foundPost, PostDetailDto.class);
+        dto.setAuthor(mapperConfiguration.convert(foundPost.getAuthor(), UserDetailDto.class));
+        return dto;
     }
 
     @Override
-    public PostDetailDto add(Long userId, PostDto postDto) {
-        User foundUser = userRepository.findById(userId)
-                .orElseThrow(UserException.NotFoundException::new);
-
+    public PostDetailDto add(PostDto postDto) {
+        User user = customUserDetailsService.getAuthenticatedUser();
         Post post = Post.builder()
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
+                .author(user)
                 .build();
-
-        foundUser.getPosts().add(post);
-
         Post savedPost = postRepository.save(post);
-
-        userRepository.save(foundUser);
-
-        return mapperConfiguration.convert(savedPost, PostDetailDto.class);
+        PostDetailDto dto = mapperConfiguration.convert(savedPost, PostDetailDto.class);
+        dto.setAuthor(mapperConfiguration.convert(savedPost.getAuthor(), UserDetailDto.class));
+        return dto;
     }
 
     @Override
     public PostDetailDto delete(Long id) {
         PostDetailDto foundPost = findById(id);
-
         postRepository.deleteById(id);
-
-        return mapperConfiguration.convert(foundPost, PostDetailDto.class);
+        return foundPost;
     }
 
     @Override
     public PostDetailDto update(Long id, PostDto updatedDto) {
         Post existingPost = postRepository.findById(id).orElseThrow(PostException.NotFoundException::new);
-
         if (updatedDto.getTitle() != null)
             existingPost.setTitle(updatedDto.getTitle());
         if (updatedDto.getContent() != null)
             existingPost.setContent(updatedDto.getContent());
-
         Post savedPost = postRepository.save(existingPost);
-
-        return mapperConfiguration.convert(savedPost, PostDetailDto.class);
+        PostDetailDto dto = mapperConfiguration.convert(savedPost, PostDetailDto.class);
+        dto.setAuthor(mapperConfiguration.convert(savedPost.getAuthor(), UserDetailDto.class));
+        return dto;
     }
 
     @Override
-    public PostDetailDto findByUserIdAndPostId(Long userId, Long postId) {
-        Post existingPost = postRepository.findByUserIdAndPostId(userId, postId).orElseThrow(PostException.NotFoundException::new);
-
-        return mapperConfiguration.convert(existingPost, PostDetailDto.class);
+    public PostDetailDto findByUserIdAndPostId(Long postId) {
+        User user = customUserDetailsService.getAuthenticatedUser();
+        Post existingPost = postRepository.findByUserIdAndPostId(user.getId(), postId).orElseThrow(PostException.NotFoundException::new);
+        PostDetailDto dto = mapperConfiguration.convert(existingPost, PostDetailDto.class);
+        dto.setAuthor(mapperConfiguration.convert(existingPost.getAuthor(), UserDetailDto.class));
+        return dto;
     }
 }

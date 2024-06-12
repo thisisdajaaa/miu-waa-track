@@ -17,9 +17,7 @@ import java.util.Map;
 @Service
 public class CommentServiceImpl implements ICommentService {
     private final ICommentRepository commentRepository;
-
     private final IPostService postService;
-
     private final MapperConfiguration mapperConfiguration;
 
     public CommentServiceImpl(ICommentRepository commentRepository, IPostService postService,
@@ -30,9 +28,21 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     @Override
-    public List<CommentDetailDto> findAll(Map<String, String> filters) {
-        return commentRepository.findAll().stream().map(
-                        i -> CommentDetailDto.builder().id(i.getId()).name(i.getName()).postId(i.getPost().getId()).build())
+    public List<CommentDetailDto> findAll(Long postId, Map<String, String> filters) {
+        Post post = mapperConfiguration.convert(postService.findById(postId), Post.class);
+        List<Comment> comments = post.getComments();
+
+        if (filters != null && !filters.isEmpty()) {
+            if (filters.containsKey("name")) {
+                String name = filters.get("name");
+                comments = comments.stream()
+                        .filter(comment -> comment.getName().contains(name))
+                        .toList();
+            }
+        }
+
+        return comments.stream()
+                .map(comment -> mapperConfiguration.convert(comment, CommentDetailDto.class))
                 .toList();
     }
 
@@ -56,8 +66,7 @@ public class CommentServiceImpl implements ICommentService {
                 .post(post)
                 .build();
 
-        CommentDetailDto savedComment = mapperConfiguration.convert(commentRepository.save(comment),
-                CommentDetailDto.class);
+        CommentDetailDto savedComment = mapperConfiguration.convert(commentRepository.save(comment), CommentDetailDto.class);
         savedComment.setPostId(post.getId());
 
         return savedComment;
@@ -66,9 +75,7 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public CommentDetailDto delete(Long id) {
         CommentDetailDto foundComment = findById(id);
-
         commentRepository.deleteById(id);
-
         return foundComment;
     }
 
@@ -92,7 +99,7 @@ public class CommentServiceImpl implements ICommentService {
     public CommentDetailDto findByPostIdAndCommentId(Long postId, Long commentId) {
         Comment comment = commentRepository.findByPostIdAndCommentId(postId, commentId)
                 .orElseThrow(CommentException.NotFoundException::new);
-        
+
         return CommentDetailDto.builder()
                 .id(comment.getId())
                 .name(comment.getName())
@@ -100,3 +107,5 @@ public class CommentServiceImpl implements ICommentService {
                 .build();
     }
 }
+
+

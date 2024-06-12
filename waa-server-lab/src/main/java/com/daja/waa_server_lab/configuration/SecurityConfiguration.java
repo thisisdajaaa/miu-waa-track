@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -31,23 +30,18 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    @Value("#{'${cors.allowed-origins}'.split(',')}")
-    private List<String> allowedOrigins;
-
-    @Value("#{'${cors.allowed-methods}'.split(',')}")
-    private List<String> allowedMethods;
-
-    @Value("#{'${cors.allowed-headers}'.split(',')}")
-    private List<String> allowedHeaders;
-
-    @Value("#{'${cors.exposed-headers}'.split(',')}")
-    private List<String> exposedHeaders;
-
-    private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**"};
-
+    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**"};
     private final AuthenticationProvider authenticationProvider;
     private final JWTAuthenticationFilterHelper jwtAuthenticationFilterHelper;
     private final LogoutHandler logoutHandler;
+    @Value("#{'${cors.allowed-origins}'.split(',')}")
+    private List<String> allowedOrigins;
+    @Value("#{'${cors.allowed-methods}'.split(',')}")
+    private List<String> allowedMethods;
+    @Value("#{'${cors.allowed-headers}'.split(',')}")
+    private List<String> allowedHeaders;
+    @Value("#{'${cors.exposed-headers}'.split(',')}")
+    private List<String> exposedHeaders;
 
     public SecurityConfiguration(AuthenticationProvider authenticationProvider,
                                  JWTAuthenticationFilterHelper jwtAuthenticationFilterHelper, LogoutHandler logoutHandler) {
@@ -66,7 +60,7 @@ public class SecurityConfiguration {
                     configuration.setAllowedMethods(allowedMethods);
                     configuration.setAllowedHeaders(allowedHeaders);
                     configuration.setExposedHeaders(exposedHeaders);
-                    configuration.addAllowedOrigin("http://localhost:3000");
+                    configuration.addAllowedOrigin("http://localhost:5173");
                     return configuration;
                 }))
                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)

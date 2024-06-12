@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICommentService {
-    List<CommentDetailDto> findAll(Map<String, String> filters);
+    List<CommentDetailDto> findAll(Long postId, Map<String, String> filters);
 
     CommentDetailDto findById(Long id);
 

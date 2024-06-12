@@ -15,4 +15,6 @@ public class PostDetailDto {
     private String title;
 
     private String content;
+
+    private UserDetailDto author;
 }
