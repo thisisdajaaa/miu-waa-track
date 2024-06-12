@@ -5,33 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecd4e248-9425-4fb6-b5aa-57cb320eff50" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Audit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../waa-client-lab/src/components/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/pages/Dashboard/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../waa-client-lab/src/pages/Dashboard/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/pages/Dashboard/components/PostDetail/PostDetail.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/pages/Dashboard/components/PostDetail/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/pages/Dashboard/components/PostDetail/types/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/services/posts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../waa-client-lab/src/services/posts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../waa-client-lab/src/types/server/post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../waa-client-lab/src/types/server/post.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/configuration/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/WaaServerLabApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/WaaServerLabApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/configuration/ApplicationConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/configuration/ApplicationConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/UserPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/UserPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/CommentDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/request/CommentDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/CommentDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/CommentDetailDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/exception/ResponseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/exception/ResponseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/helper/ApplicationAuditAwareHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/helper/ApplicationAuditAwareHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/helper/ResponseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/helper/ResponseHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/impl/PostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IAuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IAuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/ICommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/ICommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/daja/waa_server_lab/service/spec/IPostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/configuration/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/configuration/SecurityConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/CommentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Comment$CommentBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Comment$CommentBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Comment.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post$PostBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post$PostBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/Post.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto$PostDetailDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto$PostDetailDtoBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/entity/dto/response/PostDetailDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/AuthenticationServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/CommentServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/CommentServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/impl/PostServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IAuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IAuthenticationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/ICommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/ICommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/daja/waa_server_lab/service/spec/IPostService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +161,7 @@
       <workItem from="1717097391177" duration="105000" />
       <workItem from="1717097506650" duration="142000" />
       <workItem from="1717097658007" duration="9078000" />
-      <workItem from="1718131617983" duration="7490000" />
+      <workItem from="1718131617983" duration="11536000" />
     </task>
     <servers />
   </component>

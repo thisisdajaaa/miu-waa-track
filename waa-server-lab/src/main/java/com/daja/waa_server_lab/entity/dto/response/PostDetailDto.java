@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +20,10 @@ public class PostDetailDto {
     private String content;
 
     private UserDetailDto author;
+
+    private List<CommentDetailDto> comments;
+
+    private LocalDateTime createdAt;
+
+    private String createdBy;
 }

@@ -25,7 +25,7 @@ public class ResponseException extends ResponseEntityExceptionHandler {
         errors.put("RuntimeException", exception.getMessage());
 
         ResponseHelper.CustomResponse<Object> response = new ResponseHelper.CustomResponse<>(false,
-                "An error occurred!", null, errors);
+                String.join("", errors.values()), null, errors);
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -36,7 +36,7 @@ public class ResponseException extends ResponseEntityExceptionHandler {
         errors.put("AccessDeniedException", exception.getMessage());
 
         ResponseHelper.CustomResponse<Object> response = new ResponseHelper.CustomResponse<>(false,
-                "Access is denied!", null, errors);
+                String.join("", errors.values()), null, errors);
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
@@ -47,7 +47,7 @@ public class ResponseException extends ResponseEntityExceptionHandler {
         errors.put("AuthenticationException", exception.getMessage());
 
         ResponseHelper.CustomResponse<Object> response = new ResponseHelper.CustomResponse<>(false,
-                "Authentication failed!", null, errors);
+                String.join("", errors.values()), null, errors);
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }

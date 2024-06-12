@@ -28,7 +28,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public AuditorAware<Long> auditorAware() {
+    public AuditorAware<String> auditorAware() {
         return new ApplicationAuditAwareHelper();
     }
 

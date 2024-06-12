@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class WaaServerLabApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(WaaServerLabApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WaaServerLabApplication.class, args);
+    }
 
 }

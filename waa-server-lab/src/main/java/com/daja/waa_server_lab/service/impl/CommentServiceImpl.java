@@ -3,11 +3,13 @@ package com.daja.waa_server_lab.service.impl;
 import com.daja.waa_server_lab.configuration.MapperConfiguration;
 import com.daja.waa_server_lab.entity.Comment;
 import com.daja.waa_server_lab.entity.Post;
+import com.daja.waa_server_lab.entity.User;
 import com.daja.waa_server_lab.entity.dto.request.CommentDto;
 import com.daja.waa_server_lab.entity.dto.response.CommentDetailDto;
 import com.daja.waa_server_lab.exception.CommentException;
 import com.daja.waa_server_lab.repository.ICommentRepository;
 import com.daja.waa_server_lab.service.spec.ICommentService;
+import com.daja.waa_server_lab.service.spec.ICustomUserDetailsService;
 import com.daja.waa_server_lab.service.spec.IPostService;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,14 @@ import java.util.Map;
 public class CommentServiceImpl implements ICommentService {
     private final ICommentRepository commentRepository;
     private final IPostService postService;
+    private final ICustomUserDetailsService customUserDetailsService;
     private final MapperConfiguration mapperConfiguration;
 
     public CommentServiceImpl(ICommentRepository commentRepository, IPostService postService,
-                              MapperConfiguration mapperConfiguration) {
+                              ICustomUserDetailsService customUserDetailsService, MapperConfiguration mapperConfiguration) {
         this.commentRepository = commentRepository;
         this.postService = postService;
+        this.customUserDetailsService = customUserDetailsService;
         this.mapperConfiguration = mapperConfiguration;
     }
 
@@ -36,7 +40,7 @@ public class CommentServiceImpl implements ICommentService {
             if (filters.containsKey("name")) {
                 String name = filters.get("name");
                 comments = comments.stream()
-                        .filter(comment -> comment.getName().contains(name))
+                        .filter(comment -> comment.getContent().contains(name))
                         .toList();
             }
         }
@@ -52,18 +56,22 @@ public class CommentServiceImpl implements ICommentService {
 
         return CommentDetailDto.builder()
                 .id(foundComment.getId())
-                .name(foundComment.getName())
+                .content(foundComment.getContent())
                 .postId(foundComment.getPost().getId())
+                .createdAt(foundComment.getCreatedAt())
+                .createdBy(foundComment.getCreatedBy())
                 .build();
     }
 
     @Override
     public CommentDetailDto add(Long postId, CommentDto commentDto) {
         Post post = mapperConfiguration.convert(postService.findById(postId), Post.class);
+        User user = customUserDetailsService.getAuthenticatedUser();
 
         Comment comment = Comment.builder()
-                .name(commentDto.getName())
+                .content(commentDto.getContent())
                 .post(post)
+                .author(user)
                 .build();
 
         CommentDetailDto savedComment = mapperConfiguration.convert(commentRepository.save(comment), CommentDetailDto.class);
@@ -83,15 +91,17 @@ public class CommentServiceImpl implements ICommentService {
     public CommentDetailDto update(Long id, CommentDto updatedDto) {
         Comment existingComment = commentRepository.findById(id).orElseThrow(CommentException.NotFoundException::new);
 
-        if (updatedDto.getName() != null)
-            existingComment.setName(updatedDto.getName());
+        if (updatedDto.getContent() != null)
+            existingComment.setContent(updatedDto.getContent());
 
         Comment savedComment = commentRepository.save(existingComment);
 
         return CommentDetailDto.builder()
                 .id(savedComment.getId())
-                .name(savedComment.getName())
+                .content(savedComment.getContent())
                 .postId(savedComment.getPost().getId())
+                .createdAt(savedComment.getCreatedAt())
+                .createdBy(savedComment.getCreatedBy())
                 .build();
     }
 
@@ -102,10 +112,10 @@ public class CommentServiceImpl implements ICommentService {
 
         return CommentDetailDto.builder()
                 .id(comment.getId())
-                .name(comment.getName())
+                .content(comment.getContent())
                 .postId(comment.getPost().getId())
+                .createdAt(comment.getCreatedAt())
+                .createdBy(comment.getCreatedBy())
                 .build();
     }
 }
-
-
