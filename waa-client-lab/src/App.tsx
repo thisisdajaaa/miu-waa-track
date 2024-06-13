@@ -12,6 +12,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import { DashboardProvider } from "./pages/Dashboard/contexts/DashboardProvider";
 import Login from "./pages/Login";
 import { persistor, store } from "./redux/store";
 
@@ -27,7 +28,15 @@ const App: React.FC = () => {
               <Route path="/login" element={<Login />} />
               <Route
                 path="/"
-                element={<ProtectedRoute element={<Dashboard />} />}
+                element={
+                  <ProtectedRoute
+                    element={
+                      <DashboardProvider>
+                        <Dashboard />
+                      </DashboardProvider>
+                    }
+                  />
+                }
               />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

@@ -11,13 +11,14 @@ import PostDetailModal from "./components/PostDetailModal";
 import PostFormModal from "./components/PostFormModal";
 import Posts from "./components/Posts";
 import { initialPostForm } from "./fixtures";
+import { useDashboard } from "./hooks/useDashboard";
 import type { IPost, PostForm } from "./types";
 import { PostFormValidationSchema } from "./validations";
 
 const DashboardPage: FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [selectedPost, setSelectedPost] = useState<number | null>(null);
+  const { selectedPost, setSelectedPost } = useDashboard();
 
   const postFormModalRef = useRef<HTMLDialogElement | null>(null);
   const postDetailModalRef = useRef<HTMLDialogElement | null>(null);

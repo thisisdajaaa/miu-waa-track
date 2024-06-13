@@ -14,3 +14,8 @@ export type PostForm = {
   title: string;
   content: string;
 };
+
+export type DashboardContextProps = {
+  selectedPost: number | null;
+  setSelectedPost: (id: number) => void;
+};

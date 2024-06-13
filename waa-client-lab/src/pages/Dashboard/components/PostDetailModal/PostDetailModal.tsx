@@ -17,6 +17,7 @@ import type { CommentDetailResponse } from "@/types/server/comment";
 import mockAvatar from "@/assets/images/mock-avatar.jpg";
 
 import type { PostDetailModalProps } from "./types";
+import MemoizedComments from "../Comments/MemoizedComments";
 import type { IPost } from "../../types";
 
 const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
@@ -53,7 +54,7 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
 
     useEffect(() => {
       handleLoad();
-    }, [handleLoad]);
+    }, [handleLoad, selectedPost]);
 
     return (
       <Modal
@@ -107,21 +108,8 @@ const PostDetailModal = forwardRef<HTMLDialogElement, PostDetailModalProps>(
             )}
           </div>
 
-          <div className="mt-4">
-            {allComments.map((comment, index) => (
-              <div key={index} className="flex items-start gap-3 mt-3">
-                <img
-                  src={mockAvatar}
-                  alt={`${comment.author}'s avatar`}
-                  className="w-8 h-8 rounded-full"
-                />
-                <div className="flex flex-col bg-gray-100 p-3 rounded-lg shadow-sm">
-                  <p className="font-bold">{comment.createdBy}</p>
-                  <p>{comment.content}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <MemoizedComments items={allComments} />
+
           <div className="mt-4 flex items-center gap-3">
             <img
               src={mockAvatar}
