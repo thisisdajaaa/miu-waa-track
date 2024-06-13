@@ -2,7 +2,6 @@ import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Loading from "@/components/Loading";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import { DashboardProvider } from "@/pages/Dashboard/contexts/DashboardProvider";
 
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
@@ -14,13 +13,9 @@ const DashboardRoutes: FC = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoute
-              element={
-                <DashboardProvider>
-                  <Dashboard />
-                </DashboardProvider>
-              }
-            />
+            <DashboardProvider>
+              <Dashboard />
+            </DashboardProvider>
           }
         />
       </Routes>
