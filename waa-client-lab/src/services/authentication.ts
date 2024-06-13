@@ -3,11 +3,13 @@ import axios from "axios";
 import { onParseResponse } from "@/utils/helpers";
 import logger from "@/utils/logger";
 
-import { store } from "@/redux/store";
-import { actions } from "@/redux/authentication";
 import type { LoginForm } from "@/pages/Login/types";
-import type { ApiResponse } from "@/types/server/config";
+
+import { actions } from "@/redux/authentication";
+import { store } from "@/redux/store";
+
 import type { AuthenticationDetailResponse } from "@/types/server/authentication";
+import type { ApiResponse } from "@/types/server/config";
 
 export const refreshToken = async (): Promise<string> => {
   try {
