@@ -1,20 +1,12 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
 import Layout from "./components/Layout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import { DashboardProvider } from "./pages/Dashboard/contexts/DashboardProvider";
-import Login from "./pages/Login";
 import { persistor, store } from "./redux/store";
+import PageRoutes from "./routes/PageRoutes";
 
 const App: React.FC = () => {
   return (
@@ -24,22 +16,7 @@ const App: React.FC = () => {
           <Toaster />
 
           <Layout>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute
-                    element={
-                      <DashboardProvider>
-                        <Dashboard />
-                      </DashboardProvider>
-                    }
-                  />
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <PageRoutes />
           </Layout>
         </Router>
       </PersistGate>

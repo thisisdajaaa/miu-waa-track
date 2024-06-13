@@ -27,7 +27,7 @@ const Header: FC = () => {
     await logoutAPI();
     dispatch(actions.callSetResetAuthentication());
     setIsDropdownOpen(false);
-    navigate("/login");
+    navigate("/auth/login");
   };
 
   const handleHome = () => navigate("/");
